@@ -1,22 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Whipsly - Search Smarter</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Whipsly – Smarter Car Search</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <h1>Whipsly</h1>
-    <p>Find specs and deals for your next ride</p>
+  <header class="navbar">
+    <div class="container">
+      <img src="assets/whipsly-logo.svg" alt="Whipsly Logo" class="logo" />
+      <nav>
+        <a href="#">Search</a>
+        <a href="#">About</a>
+        <a href="#">Listings</a>
+        <a href="#">Specs</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
   </header>
 
-  <main>
-    <input type="text" id="searchInput" placeholder="Search vehicles (e.g. Honda Civic)">
-    <button onclick="searchWhip()">Search</button>
-    <div id="results"></div>
-  </main>
+  <section class="hero">
+    <div class="container">
+      <h1>Your Ultimate Car Research Tool</h1>
+      <p>Compare specs, view real listings, and find your next car smarter, faster, and better.</p>
+      <a href="#search" class="cta-button">Start Searching</a>
+    </div>
+  </section>
 
-  <script src="app.js"></script>
+  <section id="search" class="search-box">
+    <div class="container">
+      <h2>Search by Make, Model, or Trim</h2>
+      <form id="searchForm">
+        <input type="text" id="searchInput" placeholder="e.g. Toyota Camry SE" />
+        <button type="submit">Search</button>
+      </form>
+      <div id="results"></div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="container">
+      <div class="feature">
+        <h3>📊 Full Spec Breakdowns</h3>
+        <p>Quickly understand engine types, trims, capacities, and key performance specs at a glance.</p>
+      </div>
+      <div class="feature">
+        <h3>🚗 Real-Time Listings</h3>
+        <p>Pull listings from verified dealers and marketplaces for current price comparisons.</p>
+      </div>
+      <div class="feature">
+        <h3>✨ Clean, Fast UI</h3>
+        <p>Get exactly what you need, without clutter. Just clean results and sharp filters.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2025 Whipsly. Built for car buyers who don’t like wasting time.</p>
+    </div>
+  </footer>
+
+  <script>
+    const form = document.getElementById('searchForm');
+    const input = document.getElementById('searchInput');
+    const results = document.getElementById('results');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const query = input.value.trim();
+      if (!query) return;
+
+      results.innerHTML = 'Loading...';
+
+      try {
+        const res = await fetch(`https://whipsly-backend.onrender.com/api/search?query=${encodeURIComponent(query)}`);
+        const data = await res.json();
+        if (data && data.listings) {
+          results.innerHTML = data.listings.map(l => `
+            <div class="listing">
+              <h4>${l.title}</h4>
+              <p>${l.price}</p>
+            </div>
+          `).join('');
+        } else {
+          results.innerHTML = 'No results found.';
+        }
+      } catch (err) {
+        results.innerHTML = 'Error fetching data.';
+      }
+    });
+  </script>
 </body>
 </html>
