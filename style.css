@@ -773,7 +773,7 @@ body {
     gap: 2rem;
 }
 
-/* Car Card - Enhanced with Modern Effects */
+/* Car Card - Enhanced with Modern Effects and Full Clickability */
 .car-card {
     background: white;
     border-radius: 0.75rem;
@@ -782,6 +782,7 @@ body {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid rgba(209, 213, 219, 0.2);
     position: relative;
+    cursor: pointer;
 }
 
 .car-card::before {
@@ -795,6 +796,7 @@ body {
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: 1;
+    pointer-events: none;
 }
 
 .car-card:hover {
@@ -836,6 +838,7 @@ body {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transform: scale(0.9);
     opacity: 0.8;
+    z-index: 10;
 }
 
 .car-card:hover .favorite-btn {
@@ -848,6 +851,10 @@ body {
     transform: scale(1.1) !important;
     background: white;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.favorite-btn:active {
+    transform: scale(0.95) !important;
 }
 
 .favorite-btn.favorited {
@@ -875,8 +882,32 @@ body {
     font-weight: 500;
 }
 
+/* Car Content - Ensure all content is positioned properly for clickability */
 .car-content {
     padding: 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Ensure all interactive elements within cards have proper z-index */
+.car-content * {
+    position: relative;
+    z-index: 3;
+}
+
+/* Make sure the new listing badge doesn't interfere */
+.new-listing-badge {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    background: #059669;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    z-index: 8;
+    pointer-events: none;
 }
 
 .car-header {
@@ -978,6 +1009,7 @@ body {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+    z-index: 5;
 }
 
 .view-details-btn::before {
@@ -999,6 +1031,10 @@ body {
     background: linear-gradient(135deg, #1d4ed8, #1e40af);
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+}
+
+.view-details-btn:active {
+    transform: translateY(0);
 }
 
 /* No Results */
