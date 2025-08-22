@@ -1,64 +1,3 @@
-const locations = [
-        'New York, NY', 'Los Angeles, CA', 'Chicago, IL', 'Houston, TX', 'Phoenix, AZ',
-        'Philadelphia, PA', 'San Antonio, TX', 'San Diego, CA', 'Dallas, TX', 'San Jose, CA'
-    ];
-    
-    const dealers = [
-        'AutoMax Motors', 'Premier Auto Group', 'Elite Car Sales', 'Metro Motors',
-        'City Auto Center', 'Valley Cars', 'Highway Auto', 'Prestige Motors'
-    ];
-
-    const cars = [];
-    
-    for (let i = 0; i < count; i++) {
-        const make = makes[Math.floor(Math.random() * makes.length)];
-        const model = models[make][Math.floor(Math.random() * models[make].length)];
-        const year = 2018 + Math.floor(Math.random() * 8);
-        const mileage = Math.floor(Math.random() * 80000) + 1000;
-        const basePrice = 15000 + Math.floor(Math.random() * 60000);
-        
-        // Create price history
-        const priceHistory = [];
-        let currentPrice = basePrice;
-        for (let j = 0; j < 5; j++) {
-            priceHistory.push(currentPrice);
-            currentPrice += (Math.random() - 0.6) * 2000; // Slight tendency for prices to decrease
-        }
-        
-        const car = {
-            id: i + 1,
-            make,
-            model,
-            year,
-            price: Math.max(10000, Math.round(currentPrice)),
-            mileage,
-            mpg: `${20 + Math.floor(Math.random() * 20)} city / ${28 + Math.floor(Math.random() * 25)} hwy`,
-            location: locations[Math.floor(Math.random() * locations.length)],
-            dealer: dealers[Math.floor(Math.random() * dealers.length)],
-            rating: (3.5 + Math.random() * 1.5).toFixed(1),
-            daysOnMarket: Math.floor(Math.random() * 90) + 1,
-            bodyType: bodyTypes[Math.floor(Math.random() * bodyTypes.length)],
-            fuelType: fuelTypes[Math.floor(Math.random() * fuelTypes.length)],
-            transmission: transmissions[Math.floor(Math.random() * transmissions.length)],
-            drivetrain: drivetrains[Math.floor(Math.random() * drivetrains.length)],
-            exteriorColor: colors[Math.floor(Math.random() * colors.length)],
-            interiorColor: colors[Math.floor(Math.random() * colors.length)],
-            condition: conditions[Math.floor(Math.random() * conditions.length)],
-            features: features.sort(() => 0.5 - Math.random()).slice(0, 3 + Math.floor(Math.random() * 5)),
-            priceHistory,
-            vin: 'VIN' + Math.random().toString(36).substr(2, 14).toUpperCase(),
-            coordinates: [
-                40.7128 + (Math.random() - 0.5) * 10, // Lat around NYC area
-                -74.0060 + (Math.random() - 0.5) * 20  // Lng around NYC area
-            ]
-        };
-        
-        cars.push(car);
-    }
-    
-    return cars;
-}
-
 // State management
 let mockCars = [];
 let currentCars = [];
@@ -142,8 +81,16 @@ function getCarImage(make, model) {
 
 // Initialize data and event listeners
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize realistic car data
-    mockCars = generateRealisticCars(150);
+    // Check if generateRealisticCars is available (from realistic-cars.js)
+    if (typeof generateRealisticCars === 'function') {
+        // Initialize realistic car data
+        mockCars = generateRealisticCars(150);
+    } else {
+        console.warn('generateRealisticCars function not found. Using fallback data.');
+        // Fallback: generate basic car data if the external file isn't loaded
+        mockCars = generateFallbackCars(150);
+    }
+    
     currentCars = [...mockCars];
     
     // Render initial cars
@@ -164,6 +111,89 @@ document.addEventListener('DOMContentLoaded', function() {
         lucide.createIcons();
     }
 });
+
+// Fallback car generation if realistic-cars.js isn't loaded
+function generateFallbackCars(count = 150) {
+    const makes = ['Toyota', 'Honda', 'Ford', 'Tesla', 'BMW', 'Mercedes-Benz', 'Chevrolet', 'Audi'];
+    const models = {
+        'Toyota': ['Camry', 'Corolla', 'RAV4', 'Highlander', 'Prius'],
+        'Honda': ['Civic', 'Accord', 'CR-V', 'Pilot', 'Fit'],
+        'Ford': ['F-150', 'Explorer', 'Escape', 'Mustang', 'Focus'],
+        'Tesla': ['Model 3', 'Model Y', 'Model S', 'Model X'],
+        'BMW': ['X3', '3 Series', '5 Series', 'X5', 'i3'],
+        'Mercedes-Benz': ['C-Class', 'E-Class', 'GLE', 'A-Class', 'S-Class'],
+        'Chevrolet': ['Silverado', 'Equinox', 'Malibu', 'Tahoe', 'Camaro'],
+        'Audi': ['A4', 'Q5', 'A6', 'Q7', 'A3']
+    };
+    
+    const bodyTypes = ['Sedan', 'SUV', 'Truck', 'Coupe', 'Hatchback', 'Wagon'];
+    const fuelTypes = ['Gasoline', 'Hybrid', 'Electric', 'Diesel'];
+    const transmissions = ['Automatic', 'Manual', 'CVT'];
+    const drivetrains = ['FWD', 'RWD', 'AWD', '4WD'];
+    const colors = ['Black', 'White', 'Silver', 'Gray', 'Red', 'Blue'];
+    const features = ['Sunroof', 'Leather Seats', 'Navigation', 'Backup Camera', 'Bluetooth', 'Heated Seats', 'Remote Start', 'Apple CarPlay'];
+    const conditions = ['New', 'Used', 'Certified'];
+    
+    const locations = [
+        'New York, NY', 'Los Angeles, CA', 'Chicago, IL', 'Houston, TX', 'Phoenix, AZ',
+        'Philadelphia, PA', 'San Antonio, TX', 'San Diego, CA', 'Dallas, TX', 'San Jose, CA'
+    ];
+    
+    const dealers = [
+        'AutoMax Motors', 'Premier Auto Group', 'Elite Car Sales', 'Metro Motors',
+        'City Auto Center', 'Valley Cars', 'Highway Auto', 'Prestige Motors'
+    ];
+
+    const cars = [];
+    
+    for (let i = 0; i < count; i++) {
+        const make = makes[Math.floor(Math.random() * makes.length)];
+        const model = models[make][Math.floor(Math.random() * models[make].length)];
+        const year = 2018 + Math.floor(Math.random() * 8);
+        const mileage = Math.floor(Math.random() * 80000) + 1000;
+        const basePrice = 15000 + Math.floor(Math.random() * 60000);
+        
+        // Create price history
+        const priceHistory = [];
+        let currentPrice = basePrice;
+        for (let j = 0; j < 5; j++) {
+            priceHistory.push(currentPrice);
+            currentPrice += (Math.random() - 0.6) * 2000;
+        }
+        
+        const car = {
+            id: i + 1,
+            make,
+            model,
+            year,
+            price: Math.max(10000, Math.round(currentPrice)),
+            mileage,
+            mpg: `${20 + Math.floor(Math.random() * 20)}/${28 + Math.floor(Math.random() * 25)} mpg`,
+            location: locations[Math.floor(Math.random() * locations.length)],
+            dealer: dealers[Math.floor(Math.random() * dealers.length)],
+            rating: (3.5 + Math.random() * 1.5).toFixed(1),
+            daysOnMarket: Math.floor(Math.random() * 90) + 1,
+            bodyType: bodyTypes[Math.floor(Math.random() * bodyTypes.length)],
+            fuelType: fuelTypes[Math.floor(Math.random() * fuelTypes.length)],
+            transmission: transmissions[Math.floor(Math.random() * transmissions.length)],
+            drivetrain: drivetrains[Math.floor(Math.random() * drivetrains.length)],
+            exteriorColor: colors[Math.floor(Math.random() * colors.length)],
+            interiorColor: colors[Math.floor(Math.random() * colors.length)],
+            condition: conditions[Math.floor(Math.random() * conditions.length)],
+            features: features.sort(() => 0.5 - Math.random()).slice(0, 3 + Math.floor(Math.random() * 5)),
+            priceHistory,
+            vin: 'VIN' + Math.random().toString(36).substr(2, 14).toUpperCase(),
+            coordinates: [
+                40.7128 + (Math.random() - 0.5) * 10,
+                -74.0060 + (Math.random() - 0.5) * 20
+            ]
+        };
+        
+        cars.push(car);
+    }
+    
+    return cars;
+}
 
 function initializeEventListeners() {
     // Search functionality
@@ -297,7 +327,7 @@ function initializeRangeSliders() {
     if (monthlyPaymentRange && monthlyPaymentValue) {
         monthlyPaymentRange.addEventListener('input', (e) => {
             const value = e.target.value;
-            monthlyPaymentValue.textContent = `${parseInt(value).toLocaleString()}`;
+            monthlyPaymentValue.textContent = `$${parseInt(value).toLocaleString()}`;
             filters.monthlyPayment = value;
             applyFilters();
         });
@@ -632,7 +662,7 @@ function createCarCard(car) {
                 </div>
                 
                 <div class="car-price-section">
-                    <div class="car-price">${car.price.toLocaleString()}</div>
+                    <div class="car-price">$${car.price.toLocaleString()}</div>
                     <div class="price-change ${priceChange.isPositive ? 'positive' : 'negative'}">
                         <i data-lucide="trending-${priceChange.isPositive ? 'up' : 'down'}"></i>
                         ${Math.abs(priceChange.percent)}%
@@ -924,27 +954,4 @@ updateFavoritesCount();
 window.toggleFavorite = toggleFavorite;
 window.viewCarDetails = viewCarDetails;
 window.contactDealer = contactDealer;
-window.removeTag = removeTag;// Enhanced Car Data Generator
-function generateRealisticCars(count = 150) {
-    const makes = ['Toyota', 'Honda', 'Ford', 'Tesla', 'BMW', 'Mercedes-Benz', 'Chevrolet', 'Audi'];
-    const models = {
-        'Toyota': ['Camry', 'Corolla', 'RAV4', 'Highlander', 'Prius'],
-        'Honda': ['Civic', 'Accord', 'CR-V', 'Pilot', 'Fit'],
-        'Ford': ['F-150', 'Explorer', 'Escape', 'Mustang', 'Focus'],
-        'Tesla': ['Model 3', 'Model Y', 'Model S', 'Model X'],
-        'BMW': ['X3', '3 Series', '5 Series', 'X5', 'i3'],
-        'Mercedes-Benz': ['C-Class', 'E-Class', 'GLE', 'A-Class', 'S-Class'],
-        'Chevrolet': ['Silverado', 'Equinox', 'Malibu', 'Tahoe', 'Camaro'],
-        'Audi': ['A4', 'Q5', 'A6', 'Q7', 'A3']
-    };
-    
-    const bodyTypes = ['Sedan', 'SUV', 'Truck', 'Coupe', 'Hatchback', 'Wagon'];
-    const fuelTypes = ['Gasoline', 'Hybrid', 'Electric', 'Diesel'];
-    const transmissions = ['Automatic', 'Manual', 'CVT'];
-    const drivetrains = ['FWD', 'RWD', 'AWD', '4WD'];
-    const colors = ['Black', 'White', 'Silver', 'Gray', 'Red', 'Blue', 'Green', 'Brown'];
-    const features = ['Sunroof', 'Leather Seats', 'Navigation', 'Backup Camera', 'Bluetooth', 'Heated Seats', 'Remote Start', 'Apple CarPlay', 'Android Auto', 'Adaptive Cruise Control'];
-    const conditions = ['New', 'Used', 'Certified'];
-    
-    const locations = [
-        'New York, NY', 'Los Angeles, CA', 'Chicago, IL', 'Houston, TX', 'Phoenix,
+window.removeTag = removeTag;
