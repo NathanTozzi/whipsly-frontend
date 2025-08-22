@@ -1,97 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Whipsly – Smarter Car Search</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whipsly - Smart Car Search</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.js"></script>
 </head>
 <body>
-  <header class="navbar">
-    <div class="container">
-      <img src="assets/whipsly-logo.svg" alt="Whipsly Logo" class="logo" />
-      <nav>
-        <a href="#">Search</a>
-        <a href="#">About</a>
-        <a href="#">Listings</a>
-        <a href="#">Specs</a>
-        <a href="#">Contact</a>
-      </nav>
-    </div>
-  </header>
-
-  <section class="hero">
-    <div class="container">
-      <h1>Your Ultimate Car Research Tool</h1>
-      <p>Compare specs, view real listings, and find your next car smarter, faster, and better.</p>
-      <a href="#search" class="cta-button">Start Searching</a>
-    </div>
-  </section>
-
-  <section id="search" class="search-box">
-    <div class="container">
-      <h2>Search by Make, Model, or Trim</h2>
-      <form id="searchForm">
-        <input type="text" id="searchInput" placeholder="e.g. Toyota Camry SE" />
-        <button type="submit">Search</button>
-      </form>
-      <div id="results"></div>
-    </div>
-  </section>
-
-  <section class="features">
-    <div class="container">
-      <div class="feature">
-        <h3>📊 Full Spec Breakdowns</h3>
-        <p>Quickly understand engine types, trims, capacities, and key performance specs at a glance.</p>
-      </div>
-      <div class="feature">
-        <h3>🚗 Real-Time Listings</h3>
-        <p>Pull listings from verified dealers and marketplaces for current price comparisons.</p>
-      </div>
-      <div class="feature">
-        <h3>✨ Clean, Fast UI</h3>
-        <p>Get exactly what you need, without clutter. Just clean results and sharp filters.</p>
-      </div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <div class="container">
-      <p>© 2025 Whipsly. Built for car buyers who don’t like wasting time.</p>
-    </div>
-  </footer>
-
-  <script>
-    const form = document.getElementById('searchForm');
-    const input = document.getElementById('searchInput');
-    const results = document.getElementById('results');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const query = input.value.trim();
-      if (!query) return;
-
-      results.innerHTML = 'Loading...';
-
-      try {
-        const res = await fetch(`https://whipsly-backend.onrender.com/api/search?query=${encodeURIComponent(query)}`);
-        const data = await res.json();
-        if (data && data.listings) {
-          results.innerHTML = data.listings.map(l => `
-            <div class="listing">
-              <h4>${l.title}</h4>
-              <p>${l.price}</p>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo">
+                        <span>W</span>
+                    </div>
+                    <div class="brand-info">
+                        <h1 class="brand-name">Whipsly</h1>
+                        <p class="brand-tagline">Smart car search made simple</p>
+                    </div>
+                </div>
+                
+                <div class="header-actions">
+                    <button class="favorites-btn" id="favoritesBtn">
+                        <i data-lucide="heart"></i>
+                        Favorites (<span id="favoritesCount">0</span>)
+                    </button>
+                    <button class="signin-btn">Sign In</button>
+                </div>
             </div>
-          `).join('');
-        } else {
-          results.innerHTML = 'No results found.';
-        }
-      } catch (err) {
-        results.innerHTML = 'Error fetching data.';
-      }
-    });
-  </script>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2 class="hero-title">Find Your Perfect Car</h2>
+                <p class="hero-subtitle">Search the entire market with powerful filters and real-time insights</p>
+                
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <div class="search-bar">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input 
+                            type="text" 
+                            placeholder="Search by make, model, or year..."
+                            class="search-input"
+                            id="searchInput"
+                        >
+                        <button class="filter-toggle" id="filterToggle">
+                            <i data-lucide="filter"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="filters-section" id="filtersSection" style="display: none;">
+        <div class="container">
+            <h3 class="filters-title">Filters</h3>
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label>Min Price</label>
+                    <input type="number" placeholder="$0" id="minPrice">
+                </div>
+                <div class="filter-group">
+                    <label>Max Price</label>
+                    <input type="number" placeholder="$100,000" id="maxPrice">
+                </div>
+                <div class="filter-group">
+                    <label>Max Mileage</label>
+                    <input type="number" placeholder="100,000" id="maxMileage">
+                </div>
+                <div class="filter-group">
+                    <label>Make</label>
+                    <input type="text" placeholder="Toyota, Honda, etc." id="makeFilter">
+                </div>
+                <div class="filter-group">
+                    <label>Min Year</label>
+                    <input type="number" placeholder="2020" id="yearFilter">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Insights -->
+    <section class="insights-section">
+        <div class="container">
+            <h3 class="section-title">Market Insights</h3>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-header">
+                        <i data-lucide="dollar-sign" class="insight-icon"></i>
+                        <span class="change-indicator negative">-2.1%</span>
+                    </div>
+                    <div class="insight-value">$42,300</div>
+                    <div class="insight-label">Avg. Price</div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-header">
+                        <i data-lucide="eye" class="insight-icon"></i>
+                        <span class="change-indicator positive">+5.3%</span>
+                    </div>
+                    <div class="insight-value">12,847</div>
+                    <div class="insight-label">Total Listings</div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-header">
+                        <i data-lucide="calendar" class="insight-icon"></i>
+                        <span class="change-indicator negative">-12.5%</span>
+                    </div>
+                    <div class="insight-value">18 days</div>
+                    <div class="insight-label">Avg. Days on Market</div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-header">
+                        <i data-lucide="trending-up" class="insight-icon"></i>
+                        <span class="change-indicator positive">+8.2%</span>
+                    </div>
+                    <div class="insight-value">23%</div>
+                    <div class="insight-label">Price Drops</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section">
+        <div class="container">
+            <div class="results-header">
+                <h3 class="results-title" id="resultsTitle">6 Cars Found</h3>
+                <div class="results-controls">
+                    <select class="sort-select" id="sortSelect">
+                        <option value="price-low">Sort by Price: Low to High</option>
+                        <option value="price-high">Sort by Price: High to Low</option>
+                        <option value="mileage">Sort by Mileage</option>
+                        <option value="year">Sort by Year</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="cars-grid" id="carsGrid">
+                <!-- Cars will be dynamically loaded here -->
+            </div>
+            
+            <!-- No Results -->
+            <div class="no-results" id="noResults" style="display: none;">
+                <div class="no-results-icon">
+                    <i data-lucide="search"></i>
+                </div>
+                <h3>No cars found</h3>
+                <p>Try adjusting your search criteria or filters</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
 </body>
 </html>
