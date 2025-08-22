@@ -60,7 +60,7 @@ body {
 }
 
 .logo-image {
-    height: 2.5rem;
+    height: 3.5rem;
     width: auto;
     transition: all 0.3s ease;
     filter: brightness(1.1);
