@@ -29,7 +29,7 @@ body {
     margin: 0 auto;
     padding: 0 1rem;
 }
-/* Replace your existing .header styles in style.css with this Tesla tunnel effect */
+/* Replace your existing .header styles in style.css with this radial speed effect */
 
 .header {
     background: var(--midnight-navy);
@@ -42,108 +42,302 @@ body {
     position: relative;
 }
 
-/* Tesla Tunnel Speed Effect Background */
+/* Radial Speed Lines Effect */
 .header::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    transform: translate(-50%, -50%);
     background: 
-        /* Perspective lines creating tunnel effect */
-        linear-gradient(90deg, transparent 0%, var(--chrome-silver) 1%, transparent 2%),
-        linear-gradient(90deg, transparent 0%, var(--chrome-silver) 1%, transparent 2%),
-        linear-gradient(90deg, transparent 0%, var(--chrome-silver) 1%, transparent 2%),
-        linear-gradient(90deg, transparent 0%, var(--chrome-silver) 1%, transparent 2%),
-        linear-gradient(90deg, transparent 0%, var(--chrome-silver) 1%, transparent 2%),
-        linear-gradient(90deg, transparent 0%, var(--chrome-silver) 1%, transparent 2%),
-        linear-gradient(90deg, transparent 0%, var(--chrome-silver) 1%, transparent 2%),
-        linear-gradient(90deg, transparent 0%, var(--chrome-silver) 1%, transparent 2%);
-    background-size: 
-        100px 2px,
-        120px 3px,
-        80px 1px,
-        150px 4px,
-        90px 2px,
-        110px 3px,
-        70px 1px,
-        130px 2px;
-    background-position: 
-        0% 20%,
-        0% 30%,
-        0% 40%,
-        0% 50%,
-        0% 60%,
-        0% 70%,
-        0% 80%,
-        0% 90%;
-    animation: tunnelSpeed 0.8s linear infinite;
+        /* Multiple radial speed lines at different angles */
+        conic-gradient(from 0deg at 50% 50%, 
+            transparent 0deg,
+            var(--chrome-silver) 1deg,
+            transparent 2deg,
+            transparent 8deg,
+            var(--chrome-silver) 9deg,
+            transparent 10deg,
+            transparent 16deg,
+            var(--chrome-silver) 17deg,
+            transparent 18deg,
+            transparent 24deg,
+            var(--chrome-silver) 25deg,
+            transparent 26deg,
+            transparent 32deg,
+            var(--chrome-silver) 33deg,
+            transparent 34deg,
+            transparent 40deg,
+            var(--chrome-silver) 41deg,
+            transparent 42deg,
+            transparent 48deg,
+            var(--chrome-silver) 49deg,
+            transparent 50deg,
+            transparent 56deg,
+            var(--chrome-silver) 57deg,
+            transparent 58deg,
+            transparent 64deg,
+            var(--chrome-silver) 65deg,
+            transparent 66deg,
+            transparent 72deg,
+            var(--chrome-silver) 73deg,
+            transparent 74deg,
+            transparent 80deg,
+            var(--chrome-silver) 81deg,
+            transparent 82deg,
+            transparent 88deg,
+            var(--chrome-silver) 89deg,
+            transparent 90deg,
+            transparent 96deg,
+            var(--chrome-silver) 97deg,
+            transparent 98deg,
+            transparent 104deg,
+            var(--chrome-silver) 105deg,
+            transparent 106deg,
+            transparent 112deg,
+            var(--chrome-silver) 113deg,
+            transparent 114deg,
+            transparent 120deg,
+            var(--chrome-silver) 121deg,
+            transparent 122deg,
+            transparent 128deg,
+            var(--chrome-silver) 129deg,
+            transparent 130deg,
+            transparent 136deg,
+            var(--chrome-silver) 137deg,
+            transparent 138deg,
+            transparent 144deg,
+            var(--chrome-silver) 145deg,
+            transparent 146deg,
+            transparent 152deg,
+            var(--chrome-silver) 153deg,
+            transparent 154deg,
+            transparent 160deg,
+            var(--chrome-silver) 161deg,
+            transparent 162deg,
+            transparent 168deg,
+            var(--chrome-silver) 169deg,
+            transparent 170deg,
+            transparent 176deg,
+            var(--chrome-silver) 177deg,
+            transparent 178deg,
+            transparent 184deg,
+            var(--chrome-silver) 185deg,
+            transparent 186deg,
+            transparent 192deg,
+            var(--chrome-silver) 193deg,
+            transparent 194deg,
+            transparent 200deg,
+            var(--chrome-silver) 201deg,
+            transparent 202deg,
+            transparent 208deg,
+            var(--chrome-silver) 209deg,
+            transparent 210deg,
+            transparent 216deg,
+            var(--chrome-silver) 217deg,
+            transparent 218deg,
+            transparent 224deg,
+            var(--chrome-silver) 225deg,
+            transparent 226deg,
+            transparent 232deg,
+            var(--chrome-silver) 233deg,
+            transparent 234deg,
+            transparent 240deg,
+            var(--chrome-silver) 241deg,
+            transparent 242deg,
+            transparent 248deg,
+            var(--chrome-silver) 249deg,
+            transparent 250deg,
+            transparent 256deg,
+            var(--chrome-silver) 257deg,
+            transparent 258deg,
+            transparent 264deg,
+            var(--chrome-silver) 265deg,
+            transparent 266deg,
+            transparent 272deg,
+            var(--chrome-silver) 273deg,
+            transparent 274deg,
+            transparent 280deg,
+            var(--chrome-silver) 281deg,
+            transparent 282deg,
+            transparent 288deg,
+            var(--chrome-silver) 289deg,
+            transparent 290deg,
+            transparent 296deg,
+            var(--chrome-silver) 297deg,
+            transparent 298deg,
+            transparent 304deg,
+            var(--chrome-silver) 305deg,
+            transparent 306deg,
+            transparent 312deg,
+            var(--chrome-silver) 313deg,
+            transparent 314deg,
+            transparent 320deg,
+            var(--chrome-silver) 321deg,
+            transparent 322deg,
+            transparent 328deg,
+            var(--chrome-silver) 329deg,
+            transparent 330deg,
+            transparent 336deg,
+            var(--chrome-silver) 337deg,
+            transparent 338deg,
+            transparent 344deg,
+            var(--chrome-silver) 345deg,
+            transparent 346deg,
+            transparent 352deg,
+            var(--chrome-silver) 353deg,
+            transparent 354deg,
+            transparent 360deg
+        );
+    mask: radial-gradient(circle at center, transparent 30%, black 50%, transparent 90%);
+    -webkit-mask: radial-gradient(circle at center, transparent 30%, black 50%, transparent 90%);
+    animation: radialZoom 1.5s ease-in-out infinite;
     opacity: 0.6;
 }
 
-/* Tunnel perspective speed animation */
-@keyframes tunnelSpeed {
+/* Radial zoom animation */
+@keyframes radialZoom {
     0% {
-        transform: translateX(-100px) scaleX(0.5);
-        opacity: 0.3;
+        transform: translate(-50%, -50%) scale(0.3);
+        opacity: 0.2;
     }
     50% {
+        transform: translate(-50%, -50%) scale(1);
         opacity: 0.8;
-        transform: translateX(0px) scaleX(1);
     }
     100% {
-        transform: translateX(100px) scaleX(1.5);
-        opacity: 0.2;
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 0.1;
     }
 }
 
-/* Secondary layer for depth */
+/* Secondary layer for additional depth */
 .header::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    transform: translate(-50%, -50%);
     background: 
-        /* Horizontal speed lines */
-        repeating-linear-gradient(0deg,
-            transparent 0px,
-            rgba(209, 213, 219, 0.1) 1px,
-            rgba(209, 213, 219, 0.3) 2px,
-            transparent 3px,
-            transparent 20px
-        ),
-        /* Converging perspective lines */
-        linear-gradient(90deg, 
-            transparent 0%, 
-            rgba(209, 213, 219, 0.2) 20%, 
-            rgba(209, 213, 219, 0.4) 50%, 
-            rgba(209, 213, 219, 0.2) 80%, 
-            transparent 100%
+        conic-gradient(from 45deg at 50% 50%, 
+            transparent 0deg,
+            rgba(209, 213, 219, 0.3) 2deg,
+            transparent 4deg,
+            transparent 12deg,
+            rgba(209, 213, 219, 0.3) 14deg,
+            transparent 16deg,
+            transparent 24deg,
+            rgba(209, 213, 219, 0.3) 26deg,
+            transparent 28deg,
+            transparent 36deg,
+            rgba(209, 213, 219, 0.3) 38deg,
+            transparent 40deg,
+            transparent 48deg,
+            rgba(209, 213, 219, 0.3) 50deg,
+            transparent 52deg,
+            transparent 60deg,
+            rgba(209, 213, 219, 0.3) 62deg,
+            transparent 64deg,
+            transparent 72deg,
+            rgba(209, 213, 219, 0.3) 74deg,
+            transparent 76deg,
+            transparent 84deg,
+            rgba(209, 213, 219, 0.3) 86deg,
+            transparent 88deg,
+            transparent 96deg,
+            rgba(209, 213, 219, 0.3) 98deg,
+            transparent 100deg,
+            transparent 108deg,
+            rgba(209, 213, 219, 0.3) 110deg,
+            transparent 112deg,
+            transparent 120deg,
+            rgba(209, 213, 219, 0.3) 122deg,
+            transparent 124deg,
+            transparent 132deg,
+            rgba(209, 213, 219, 0.3) 134deg,
+            transparent 136deg,
+            transparent 144deg,
+            rgba(209, 213, 219, 0.3) 146deg,
+            transparent 148deg,
+            transparent 156deg,
+            rgba(209, 213, 219, 0.3) 158deg,
+            transparent 160deg,
+            transparent 168deg,
+            rgba(209, 213, 219, 0.3) 170deg,
+            transparent 172deg,
+            transparent 180deg,
+            rgba(209, 213, 219, 0.3) 182deg,
+            transparent 184deg,
+            transparent 192deg,
+            rgba(209, 213, 219, 0.3) 194deg,
+            transparent 196deg,
+            transparent 204deg,
+            rgba(209, 213, 219, 0.3) 206deg,
+            transparent 208deg,
+            transparent 216deg,
+            rgba(209, 213, 219, 0.3) 218deg,
+            transparent 220deg,
+            transparent 228deg,
+            rgba(209, 213, 219, 0.3) 230deg,
+            transparent 232deg,
+            transparent 240deg,
+            rgba(209, 213, 219, 0.3) 242deg,
+            transparent 244deg,
+            transparent 252deg,
+            rgba(209, 213, 219, 0.3) 254deg,
+            transparent 256deg,
+            transparent 264deg,
+            rgba(209, 213, 219, 0.3) 266deg,
+            transparent 268deg,
+            transparent 276deg,
+            rgba(209, 213, 219, 0.3) 278deg,
+            transparent 280deg,
+            transparent 288deg,
+            rgba(209, 213, 219, 0.3) 290deg,
+            transparent 292deg,
+            transparent 300deg,
+            rgba(209, 213, 219, 0.3) 302deg,
+            transparent 304deg,
+            transparent 312deg,
+            rgba(209, 213, 219, 0.3) 314deg,
+            transparent 316deg,
+            transparent 324deg,
+            rgba(209, 213, 219, 0.3) 326deg,
+            transparent 328deg,
+            transparent 336deg,
+            rgba(209, 213, 219, 0.3) 338deg,
+            transparent 340deg,
+            transparent 348deg,
+            rgba(209, 213, 219, 0.3) 350deg,
+            transparent 352deg,
+            transparent 360deg
         );
-    background-size: 100% 100%, 200px 100%;
-    animation: perspectiveFlow 1.2s ease-in-out infinite;
+    mask: radial-gradient(circle at center, transparent 40%, black 60%, transparent 95%);
+    -webkit-mask: radial-gradient(circle at center, transparent 40%, black 60%, transparent 95%);
+    animation: radialZoomSecondary 2s ease-in-out infinite;
     opacity: 0.4;
 }
 
-@keyframes perspectiveFlow {
+@keyframes radialZoomSecondary {
     0% {
-        background-position: 0% 0%, -200px 0%;
-        transform: perspective(1000px) rotateX(0deg);
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0.1;
     }
     50% {
-        background-position: 0% 0%, 0px 0%;
-        transform: perspective(1000px) rotateX(1deg);
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0.6;
     }
     100% {
-        background-position: 0% 0%, 200px 0%;
-        transform: perspective(1000px) rotateX(0deg);
+        transform: translate(-50%, -50%) scale(2.5);
+        opacity: 0.05;
     }
 }
 
-/* Enhanced header content positioning */
+/* Header content with proper layering */
 .header-content {
     display: flex;
     align-items: center;
@@ -151,11 +345,11 @@ body {
     padding: 1.25rem 0;
     position: relative;
     z-index: 10;
-    background: rgba(10, 31, 68, 0.85);
-    backdrop-filter: blur(5px);
+    background: rgba(10, 31, 68, 0.9);
+    backdrop-filter: blur(8px);
 }
 
-/* Logo section with better contrast */
+/* Logo section */
 .logo-section {
     display: flex;
     align-items: center;
@@ -200,7 +394,7 @@ body {
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-/* Enhanced header actions */
+/* Header actions */
 .header-actions {
     display: flex;
     align-items: center;
@@ -267,15 +461,15 @@ body {
     box-shadow: 0 8px 30px rgba(209, 213, 219, 0.6);
 }
 
-/* Performance optimizations for mobile */
+/* Mobile optimizations */
 @media (max-width: 768px) {
     .header::before {
-        animation-duration: 1s;
+        animation-duration: 2s;
         opacity: 0.4;
     }
     
     .header::after {
-        animation-duration: 1.5s;
+        animation-duration: 2.5s;
         opacity: 0.3;
     }
     
@@ -299,19 +493,18 @@ body {
         font-size: 0.875rem;
     }
     
-    /* Reduce animation intensity on small screens */
     .header::before {
-        animation-duration: 1.2s;
+        animation-duration: 2.5s;
         opacity: 0.3;
     }
     
     .header::after {
-        animation-duration: 2s;
+        animation-duration: 3s;
         opacity: 0.2;
     }
 }
 
-/* Disable animations for users who prefer reduced motion */
+/* Accessibility */
 @media (prefers-reduced-motion: reduce) {
     .header::before,
     .header::after {
