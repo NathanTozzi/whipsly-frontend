@@ -13,12 +13,12 @@ if (dbConfig.use_env_variable) {
 }
 
 // Import models
-const Car = require('../../models/car')(sequelize);
-const User = require('../../models/User')(sequelize);
-const Dealer = require('../../models/Dealer')(sequelize);
-const Favorite = require('../../models/Favorite')(sequelize);
-const Inquiry = require('../../models/Inquiry')(sequelize);
-const SearchHistory = require('../../models/SearchHistory')(sequelize);
+const Car = require('./car')(sequelize);
+const User = require('./user')(sequelize);
+const Dealer = require('./dealer')(sequelize);
+const Favorite = require('./favorite')(sequelize);
+const Inquiry = require('./inquiry')(sequelize);
+const SearchHistory = require('./searchhistory')(sequelize);
 
 // Store models in db object
 const db = {
