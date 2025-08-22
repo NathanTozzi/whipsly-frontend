@@ -139,6 +139,16 @@
             <div class="results-header">
                 <h3 class="results-title" id="resultsTitle">6 Cars Found</h3>
                 <div class="results-controls">
+                    <div class="view-toggle">
+                        <button class="view-btn active" id="gridViewBtn" data-view="grid">
+                            <i data-lucide="grid-3x3"></i>
+                            Grid
+                        </button>
+                        <button class="view-btn" id="mapViewBtn" data-view="map">
+                            <i data-lucide="map"></i>
+                            Map
+                        </button>
+                    </div>
                     <select class="sort-select" id="sortSelect">
                         <option value="price-low">Sort by Price: Low to High</option>
                         <option value="price-high">Sort by Price: High to Low</option>
@@ -148,8 +158,14 @@
                 </div>
             </div>
             
+            <!-- Grid View -->
             <div class="cars-grid" id="carsGrid">
                 <!-- Cars will be dynamically loaded here -->
+            </div>
+            
+            <!-- Map View -->
+            <div class="map-container" id="mapContainer" style="display: none;">
+                <div id="carMap"></div>
             </div>
             
             <!-- No Results -->
@@ -163,7 +179,24 @@
         </div>
     </section>
 
+    <!-- Car Detail Modal -->
+    <div class="modal-overlay" id="carModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalCarTitle"></h2>
+                <button class="modal-close" id="modalClose">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalCarContent">
+                <!-- Car details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
     <script src="app.js"></script>
     <script>
         // Initialize Lucide icons
