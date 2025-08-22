@@ -4,65 +4,65 @@
 // Base car models with realistic pricing ranges and popularity
 const carModels = {
     'Toyota': {
-        'Camry': { basePrice: 25000, popularity: 85, depreciation: 0.12 },
-        'Corolla': { basePrice: 22000, popularity: 90, depreciation: 0.15 },
-        'RAV4': { basePrice: 28000, popularity: 88, depreciation: 0.10 },
-        'Prius': { basePrice: 27000, popularity: 70, depreciation: 0.18 },
-        'Highlander': { basePrice: 35000, popularity: 75, depreciation: 0.14 },
-        'Tacoma': { basePrice: 32000, popularity: 80, depreciation: 0.08 }
+        'Camry': { basePrice: 25000, popularity: 85, depreciation: 0.12, bodyStyle: 'Sedan' },
+        'Corolla': { basePrice: 22000, popularity: 90, depreciation: 0.15, bodyStyle: 'Sedan' },
+        'RAV4': { basePrice: 28000, popularity: 88, depreciation: 0.10, bodyStyle: 'SUV' },
+        'Prius': { basePrice: 27000, popularity: 70, depreciation: 0.18, bodyStyle: 'Hatchback' },
+        'Highlander': { basePrice: 35000, popularity: 75, depreciation: 0.14, bodyStyle: 'SUV' },
+        'Tacoma': { basePrice: 32000, popularity: 80, depreciation: 0.08, bodyStyle: 'Truck' }
     },
     'Honda': {
-        'Civic': { basePrice: 23000, popularity: 85, depreciation: 0.13 },
-        'Accord': { basePrice: 26000, popularity: 80, depreciation: 0.12 },
-        'CR-V': { basePrice: 28000, popularity: 88, depreciation: 0.11 },
-        'Pilot': { basePrice: 38000, popularity: 70, depreciation: 0.15 },
-        'Odyssey': { basePrice: 35000, popularity: 60, depreciation: 0.20 },
-        'Ridgeline': { basePrice: 38000, popularity: 45, depreciation: 0.16 }
+        'Civic': { basePrice: 23000, popularity: 85, depreciation: 0.13, bodyStyle: 'Sedan' },
+        'Accord': { basePrice: 26000, popularity: 80, depreciation: 0.12, bodyStyle: 'Sedan' },
+        'CR-V': { basePrice: 28000, popularity: 88, depreciation: 0.11, bodyStyle: 'SUV' },
+        'Pilot': { basePrice: 38000, popularity: 70, depreciation: 0.15, bodyStyle: 'SUV' },
+        'Odyssey': { basePrice: 35000, popularity: 60, depreciation: 0.20, bodyStyle: 'Wagon' },
+        'Ridgeline': { basePrice: 38000, popularity: 45, depreciation: 0.16, bodyStyle: 'Truck' }
     },
     'Ford': {
-        'F-150': { basePrice: 33000, popularity: 95, depreciation: 0.09 },
-        'Escape': { basePrice: 26000, popularity: 75, depreciation: 0.16 },
-        'Explorer': { basePrice: 35000, popularity: 70, depreciation: 0.17 },
-        'Mustang': { basePrice: 31000, popularity: 65, depreciation: 0.14 },
-        'Edge': { basePrice: 33000, popularity: 60, depreciation: 0.18 },
-        'Ranger': { basePrice: 27000, popularity: 70, depreciation: 0.12 }
+        'F-150': { basePrice: 33000, popularity: 95, depreciation: 0.09, bodyStyle: 'Truck' },
+        'Escape': { basePrice: 26000, popularity: 75, depreciation: 0.16, bodyStyle: 'SUV' },
+        'Explorer': { basePrice: 35000, popularity: 70, depreciation: 0.17, bodyStyle: 'SUV' },
+        'Mustang': { basePrice: 31000, popularity: 65, depreciation: 0.14, bodyStyle: 'Coupe' },
+        'Edge': { basePrice: 33000, popularity: 60, depreciation: 0.18, bodyStyle: 'SUV' },
+        'Ranger': { basePrice: 27000, popularity: 70, depreciation: 0.12, bodyStyle: 'Truck' }
     },
     'Chevrolet': {
-        'Silverado': { basePrice: 34000, popularity: 90, depreciation: 0.10 },
-        'Equinox': { basePrice: 26000, popularity: 75, depreciation: 0.17 },
-        'Malibu': { basePrice: 24000, popularity: 65, depreciation: 0.19 },
-        'Tahoe': { basePrice: 52000, popularity: 60, depreciation: 0.16 },
-        'Camaro': { basePrice: 32000, popularity: 55, depreciation: 0.16 },
-        'Traverse': { basePrice: 34000, popularity: 70, depreciation: 0.17 }
+        'Silverado': { basePrice: 34000, popularity: 90, depreciation: 0.10, bodyStyle: 'Truck' },
+        'Equinox': { basePrice: 26000, popularity: 75, depreciation: 0.17, bodyStyle: 'SUV' },
+        'Malibu': { basePrice: 24000, popularity: 65, depreciation: 0.19, bodyStyle: 'Sedan' },
+        'Tahoe': { basePrice: 52000, popularity: 60, depreciation: 0.16, bodyStyle: 'SUV' },
+        'Camaro': { basePrice: 32000, popularity: 55, depreciation: 0.16, bodyStyle: 'Coupe' },
+        'Traverse': { basePrice: 34000, popularity: 70, depreciation: 0.17, bodyStyle: 'SUV' }
     },
     'BMW': {
-        'X3': { basePrice: 45000, popularity: 40, depreciation: 0.22 },
-        '3 Series': { basePrice: 42000, popularity: 45, depreciation: 0.20 },
-        'X5': { basePrice: 60000, popularity: 35, depreciation: 0.25 },
-        '5 Series': { basePrice: 55000, popularity: 30, depreciation: 0.23 },
-        'X1': { basePrice: 38000, popularity: 50, depreciation: 0.21 },
-        'X7': { basePrice: 75000, popularity: 20, depreciation: 0.28 }
+        'X3': { basePrice: 45000, popularity: 40, depreciation: 0.22, bodyStyle: 'SUV' },
+        '3 Series': { basePrice: 42000, popularity: 45, depreciation: 0.20, bodyStyle: 'Sedan' },
+        'X5': { basePrice: 60000, popularity: 35, depreciation: 0.25, bodyStyle: 'SUV' },
+        '5 Series': { basePrice: 55000, popularity: 30, depreciation: 0.23, bodyStyle: 'Sedan' },
+        'X1': { basePrice: 38000, popularity: 50, depreciation: 0.21, bodyStyle: 'SUV' },
+        'X7': { basePrice: 75000, popularity: 20, depreciation: 0.28, bodyStyle: 'SUV' }
     },
     'Mercedes-Benz': {
-        'C-Class': { basePrice: 43000, popularity: 40, depreciation: 0.24 },
-        'GLE': { basePrice: 58000, popularity: 35, depreciation: 0.26 },
-        'A-Class': { basePrice: 34000, popularity: 45, depreciation: 0.22 },
-        'E-Class': { basePrice: 56000, popularity: 30, depreciation: 0.25 },
-        'GLC': { basePrice: 45000, popularity: 50, depreciation: 0.23 },
-        'S-Class': { basePrice: 95000, popularity: 15, depreciation: 0.30 }
+        'C-Class': { basePrice: 43000, popularity: 40, depreciation: 0.24, bodyStyle: 'Sedan' },
+        'GLE': { basePrice: 58000, popularity: 35, depreciation: 0.26, bodyStyle: 'SUV' },
+        'A-Class': { basePrice: 34000, popularity: 45, depreciation: 0.22, bodyStyle: 'Sedan' },
+        'E-Class': { basePrice: 56000, popularity: 30, depreciation: 0.25, bodyStyle: 'Sedan' },
+        'GLC': { basePrice: 45000, popularity: 50, depreciation: 0.23, bodyStyle: 'SUV' },
+        'S-Class': { basePrice: 95000, popularity: 15, depreciation: 0.30, bodyStyle: 'Sedan' }
     },
     'Tesla': {
-        'Model 3': { basePrice: 40000, popularity: 75, depreciation: 0.15 },
-        'Model Y': { basePrice: 52000, popularity: 80, depreciation: 0.12 },
-        'Model S': { basePrice: 95000, popularity: 25, depreciation: 0.20 },
-        'Model X': { basePrice: 100000, popularity: 20, depreciation: 0.22 }
+        'Model 3': { basePrice: 40000, popularity: 75, depreciation: 0.15, bodyStyle: 'Sedan' },
+        'Model Y': { basePrice: 52000, popularity: 80, depreciation: 0.12, bodyStyle: 'SUV' },
+        'Model S': { basePrice: 95000, popularity: 25, depreciation: 0.20, bodyStyle: 'Sedan' },
+        'Model X': { basePrice: 100000, popularity: 20, depreciation: 0.22, bodyStyle: 'SUV' }
     },
     'Audi': {
-        'Q5': { basePrice: 45000, popularity: 40, depreciation: 0.23 },
-        'A4': { basePrice: 40000, popularity: 35, depreciation: 0.21 },
-        'Q7': { basePrice: 58000, popularity: 30, depreciation: 0.26 },
-        'A6': { basePrice: 56000, popularity: 25, depreciation: 0.24 },
-        'Q3': { basePrice: 36000, popularity: 45, depreciation: 0.20 }
+        'Q5': { basePrice: 45000, popularity: 40, depreciation: 0.23, bodyStyle: 'SUV' },
+        'A4': { basePrice: 40000, popularity: 35, depreciation: 0.21, bodyStyle: 'Sedan' },
+        'Q7': { basePrice: 58000, popularity: 30, depreciation: 0.26, bodyStyle: 'SUV' },
+        'A6': { basePrice: 56000, popularity: 25, depreciation: 0.24, bodyStyle: 'Sedan' },
+        'Q3': { basePrice: 36000, popularity: 45, depreciation: 0.20, bodyStyle: 'SUV' }
     }
 };
 
@@ -90,11 +90,11 @@ const dealers = {
     'Charlotte, NC': { lat: 35.2271, lng: -80.8431, marketMultiplier: 0.99 }
 };
 
-// Popular car features by category
+// Popular car features by category - Updated to match filter options
 const features = {
     safety: ['Adaptive Cruise Control', 'Lane Departure Warning', 'Blind Spot Monitoring', 'Automatic Emergency Braking', 'Rear Cross Traffic Alert'],
-    technology: ['Apple CarPlay', 'Android Auto', 'Wireless Charging', 'Premium Audio', 'Navigation System', 'WiFi Hotspot'],
-    comfort: ['Heated Seats', 'Cooled Seats', 'Panoramic Sunroof', 'Leather Interior', 'Power Liftgate', 'Remote Start'],
+    technology: ['Apple CarPlay', 'Android Auto', 'Bluetooth', 'Navigation', 'Wireless Charging', 'Premium Audio', 'WiFi Hotspot'],
+    comfort: ['Heated Seats', 'Leather Seats', 'Sunroof', 'Remote Start', 'Power Liftgate', 'Backup Camera'],
     performance: ['Turbo Engine', 'All-Wheel Drive', 'Sport Mode', 'Performance Tires', 'Sport Suspension', 'Paddle Shifters'],
     luxury: ['Premium Package', 'Driver Assistance Package', 'Cold Weather Package', 'Towing Package', 'Off-Road Package']
 };
@@ -153,7 +153,7 @@ function generateDaysOnMarket(popularity) {
     return Math.round(baseDays + variation);
 }
 
-// Get random features for a car
+// Get random features for a car - Updated to match filter system
 function getRandomFeatures(make, price) {
     const allFeatures = [...features.safety, ...features.technology, ...features.comfort];
     
@@ -164,15 +164,16 @@ function getRandomFeatures(make, price) {
     
     // Tesla gets specific tech features
     if (make === 'Tesla') {
-        return ['Autopilot', 'Over-the-Air Updates', 'Supercharging', 'Glass Roof', 'Premium Interior'];
+        return ['Autopilot', 'Apple CarPlay', 'Navigation', 'Backup Camera', 'Heated Seats'];
     }
     
-    // Select 3-6 random features
+    // Select 3-6 random features that match our filter options
+    const filterFeatures = ['Sunroof', 'Leather Seats', 'Navigation', 'Backup Camera', 'Bluetooth', 'Heated Seats', 'Remote Start', 'Apple CarPlay'];
     const numFeatures = 3 + Math.floor(Math.random() * 4);
     const selectedFeatures = [];
     
     for (let i = 0; i < numFeatures; i++) {
-        const randomFeature = allFeatures[Math.floor(Math.random() * allFeatures.length)];
+        const randomFeature = filterFeatures[Math.floor(Math.random() * filterFeatures.length)];
         if (!selectedFeatures.includes(randomFeature)) {
             selectedFeatures.push(randomFeature);
         }
@@ -220,7 +221,7 @@ function generateMPG(make, model, year) {
     cityMPG += efficiencyBonus;
     highwayMPG += efficiencyBonus;
     
-    return `${Math.round(cityMPG)}/${Math.round(highwayMPG)} MPG`;
+    return `${Math.round(cityMPG)}/${Math.round(highwayMPG)} mpg`;
 }
 
 // Generate transmission based on make and year
@@ -230,15 +231,14 @@ function generateTransmission(make, model, year) {
     const isElectric = make === 'Tesla';
     
     if (isElectric) return 'Direct Drive';
-    if (isManual) return '6-Speed Manual';
+    if (isManual) return 'Manual';
     if (isCVT) return 'CVT';
     
     // Most cars have automatic
-    const speeds = year > 2018 ? ['8-Speed', '9-Speed', '10-Speed'] : ['6-Speed', '7-Speed', '8-Speed'];
-    return `${speeds[Math.floor(Math.random() * speeds.length)]} Automatic`;
+    return 'Automatic';
 }
 
-// Generate drivetrain
+// Generate drivetrain - Updated to match filter options
 function generateDrivetrain(make, model) {
     const isAWD = model.includes('X') || model.includes('Q') || model.includes('4') || 
                  ['RAV4', 'CR-V', 'Highlander', 'Pilot', 'Explorer', 'Tahoe'].includes(model);
@@ -287,6 +287,32 @@ function generateRating(make, popularity) {
     const baseRating = 3.5 + (popularity / 100) * 1.3; // 3.5 to 4.8 range
     const variation = (Math.random() - 0.5) * 0.4; // ±0.2 variation
     return Math.round((baseRating + variation) * 10) / 10; // Round to 1 decimal
+}
+
+// Generate fuel type based on make and model
+function getFuelType(make, model) {
+    if (make === 'Tesla') return 'Electric';
+    if (model === 'Prius' || Math.random() < 0.15) return 'Hybrid';
+    if (Math.random() < 0.05) return 'Diesel';
+    return 'Gasoline';
+}
+
+// Generate condition - Updated to match filter options
+function generateCondition(year) {
+    if (year >= 2023) return Math.random() < 0.6 ? 'New' : 'Certified';
+    if (year >= 2020) return Math.random() < 0.3 ? 'Certified' : 'Used';
+    return 'Used';
+}
+
+// Get random color from filter options
+function getRandomColor() {
+    const colors = ['White', 'Black', 'Silver', 'Gray', 'Red', 'Blue'];
+    return colors[Math.floor(Math.random() * colors.length)];
+}
+
+function getRandomInteriorColor() {
+    const colors = ['Black', 'Gray', 'Beige', 'Brown', 'Tan'];
+    return colors[Math.floor(Math.random() * colors.length)];
 }
 
 // Main function to generate realistic cars
@@ -348,7 +374,7 @@ function generateRealisticCars(count = 200) {
         const price = calculatePrice(selectedCar.basePrice, year, mileage, location, selectedCar.depreciation);
         const daysOnMarket = generateDaysOnMarket(selectedCar.popularity);
         
-        // Generate car object
+        // Generate car object - Updated to match filter system
         const car = {
             id: carId++,
             make: selectedCar.make,
@@ -359,7 +385,6 @@ function generateRealisticCars(count = 200) {
             location: location,
             coordinates: [dealers[location].lat, dealers[location].lng],
             dealer: generateDealerName(selectedCar.make, location),
-            image: `https://images.unsplash.com/photo-${1500000000000 + Math.floor(Math.random() * 100000000)}?w=400&h=300&fit=crop&auto=format&q=80`, // Realistic car photos
             priceHistory: generatePriceHistory(price),
             daysOnMarket: daysOnMarket,
             mpg: generateMPG(selectedCar.make, selectedCar.model, year),
@@ -368,9 +393,9 @@ function generateRealisticCars(count = 200) {
             features: getRandomFeatures(selectedCar.make, price),
             rating: generateRating(selectedCar.make, selectedCar.popularity),
             vin: generateVIN(),
-            condition: 'Used',
-            bodyStyle: getBodyStyle(selectedCar.model),
-            fuelType: selectedCar.make === 'Tesla' ? 'Electric' : 'Gasoline',
+            condition: generateCondition(year),
+            bodyType: selectedCar.bodyStyle,
+            fuelType: getFuelType(selectedCar.make, selectedCar.model),
             exteriorColor: getRandomColor(),
             interiorColor: getRandomInteriorColor()
         };
@@ -379,30 +404,6 @@ function generateRealisticCars(count = 200) {
     }
     
     return cars;
-}
-
-// Helper functions
-function getBodyStyle(model) {
-    const suvModels = ['RAV4', 'CR-V', 'X3', 'X5', 'Q5', 'Q7', 'GLE', 'GLC', 'Explorer', 'Highlander', 'Pilot', 'Tahoe', 'Traverse'];
-    const truckModels = ['F-150', 'Silverado', 'Tacoma', 'Ranger', 'Ridgeline'];
-    const sedanModels = ['Camry', 'Accord', 'Civic', 'Corolla', 'Malibu', '3 Series', '5 Series', 'C-Class', 'E-Class', 'S-Class', 'A4', 'A6'];
-    
-    if (truckModels.includes(model)) return 'Pickup Truck';
-    if (suvModels.includes(model)) return 'SUV';
-    if (sedanModels.includes(model)) return 'Sedan';
-    if (model.includes('Mustang') || model.includes('Camaro')) return 'Coupe';
-    
-    return 'Sedan'; // Default
-}
-
-function getRandomColor() {
-    const colors = ['White', 'Black', 'Silver', 'Gray', 'Red', 'Blue', 'Green', 'Brown', 'Gold', 'Orange'];
-    return colors[Math.floor(Math.random() * colors.length)];
-}
-
-function getRandomInteriorColor() {
-    const colors = ['Black', 'Gray', 'Beige', 'Brown', 'Tan'];
-    return colors[Math.floor(Math.random() * colors.length)];
 }
 
 // Export for use in your app

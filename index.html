@@ -66,30 +66,310 @@
         </div>
     </section>
 
-    <!-- Filters -->
+    <!-- Enhanced Filters -->
     <section class="filters-section" id="filtersSection" style="display: none;">
         <div class="container">
-            <h3 class="filters-title">Filters</h3>
-            <div class="filters-grid">
-                <div class="filter-group">
-                    <label>Min Price</label>
-                    <input type="number" placeholder="$0" id="minPrice">
+            <div class="filters-header">
+                <h3 class="filters-title">Advanced Filters</h3>
+                <div class="filter-actions">
+                    <span class="active-filter-count" id="activeFilterCount" style="display: none;">0 filters active</span>
+                    <button class="clear-filters-btn" id="clearFiltersBtn">Clear All</button>
                 </div>
-                <div class="filter-group">
-                    <label>Max Price</label>
-                    <input type="number" placeholder="$100,000" id="maxPrice">
+            </div>
+            
+            <div class="filter-categories">
+                <!-- Price & Financial -->
+                <div class="filter-category">
+                    <h4 class="filter-category-title">
+                        <i data-lucide="dollar-sign" class="filter-category-icon"></i>
+                        Price & Financing
+                    </h4>
+                    <div class="filter-grid">
+                        <div class="filter-group">
+                            <label>Min Price</label>
+                            <input type="number" placeholder="$0" id="minPrice">
+                        </div>
+                        <div class="filter-group">
+                            <label>Max Price</label>
+                            <input type="number" placeholder="$100,000" id="maxPrice">
+                        </div>
+                        <div class="filter-group">
+                            <label>Monthly Payment</label>
+                            <div class="range-slider">
+                                <input type="range" id="monthlyPaymentRange" min="0" max="2000" value="1000">
+                                <div class="range-values">
+                                    <span>$0</span>
+                                    <span id="monthlyPaymentValue">$1,000</span>
+                                    <span>$2,000+</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="filter-group">
-                    <label>Max Mileage</label>
-                    <input type="number" placeholder="100,000" id="maxMileage">
+
+                <!-- Vehicle Details -->
+                <div class="filter-category">
+                    <h4 class="filter-category-title">
+                        <i data-lucide="car" class="filter-category-icon"></i>
+                        Vehicle Details
+                    </h4>
+                    <div class="filter-grid">
+                        <div class="filter-group">
+                            <label>Make</label>
+                            <div class="multi-select-container">
+                                <div class="multi-select-display" id="makeDisplay">
+                                    <span>Select Makes</span>
+                                    <i data-lucide="chevron-down"></i>
+                                </div>
+                                <div class="multi-select-options" id="makeOptions">
+                                    <div class="multi-select-option">
+                                        <input type="checkbox" value="Toyota" id="make-toyota">
+                                        <label for="make-toyota">Toyota</label>
+                                    </div>
+                                    <div class="multi-select-option">
+                                        <input type="checkbox" value="Honda" id="make-honda">
+                                        <label for="make-honda">Honda</label>
+                                    </div>
+                                    <div class="multi-select-option">
+                                        <input type="checkbox" value="Ford" id="make-ford">
+                                        <label for="make-ford">Ford</label>
+                                    </div>
+                                    <div class="multi-select-option">
+                                        <input type="checkbox" value="Tesla" id="make-tesla">
+                                        <label for="make-tesla">Tesla</label>
+                                    </div>
+                                    <div class="multi-select-option">
+                                        <input type="checkbox" value="BMW" id="make-bmw">
+                                        <label for="make-bmw">BMW</label>
+                                    </div>
+                                    <div class="multi-select-option">
+                                        <input type="checkbox" value="Mercedes-Benz" id="make-mercedes">
+                                        <label for="make-mercedes">Mercedes-Benz</label>
+                                    </div>
+                                    <div class="multi-select-option">
+                                        <input type="checkbox" value="Chevrolet" id="make-chevrolet">
+                                        <label for="make-chevrolet">Chevrolet</label>
+                                    </div>
+                                    <div class="multi-select-option">
+                                        <input type="checkbox" value="Audi" id="make-audi">
+                                        <label for="make-audi">Audi</label>
+                                    </div>
+                                </div>
+                                <div class="selected-tags" id="makeSelectedTags"></div>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <label>Body Type</label>
+                            <select id="bodyTypeFilter">
+                                <option value="">All Types</option>
+                                <option value="Sedan">Sedan</option>
+                                <option value="SUV">SUV</option>
+                                <option value="Truck">Truck</option>
+                                <option value="Coupe">Coupe</option>
+                                <option value="Convertible">Convertible</option>
+                                <option value="Hatchback">Hatchback</option>
+                                <option value="Wagon">Wagon</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Fuel Type</label>
+                            <select id="fuelTypeFilter">
+                                <option value="">All Fuel Types</option>
+                                <option value="Gasoline">Gasoline</option>
+                                <option value="Hybrid">Hybrid</option>
+                                <option value="Electric">Electric</option>
+                                <option value="Diesel">Diesel</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                <div class="filter-group">
-                    <label>Make</label>
-                    <input type="text" placeholder="Toyota, Honda, etc." id="makeFilter">
+
+                <!-- Performance & Specs -->
+                <div class="filter-category">
+                    <h4 class="filter-category-title">
+                        <i data-lucide="gauge" class="filter-category-icon"></i>
+                        Performance & Specs
+                    </h4>
+                    <div class="filter-grid">
+                        <div class="filter-group">
+                            <label>Mileage Range</label>
+                            <div class="range-slider">
+                                <input type="range" id="mileageRange" min="0" max="200000" value="100000">
+                                <div class="range-values">
+                                    <span>0 mi</span>
+                                    <span id="mileageValue">100,000 mi</span>
+                                    <span>200,000+ mi</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <label>Year Range</label>
+                            <div class="range-slider">
+                                <input type="range" id="yearRange" min="2010" max="2025" value="2020">
+                                <div class="range-values">
+                                    <span>2010</span>
+                                    <span id="yearValue">2020</span>
+                                    <span>2025</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <label>Transmission</label>
+                            <select id="transmissionFilter">
+                                <option value="">All Transmissions</option>
+                                <option value="Automatic">Automatic</option>
+                                <option value="Manual">Manual</option>
+                                <option value="CVT">CVT</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Drivetrain</label>
+                            <select id="drivetrainFilter">
+                                <option value="">All Drivetrains</option>
+                                <option value="FWD">Front-Wheel Drive</option>
+                                <option value="RWD">Rear-Wheel Drive</option>
+                                <option value="AWD">All-Wheel Drive</option>
+                                <option value="4WD">4-Wheel Drive</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                <div class="filter-group">
-                    <label>Min Year</label>
-                    <input type="number" placeholder="2020" id="yearFilter">
+
+                <!-- Features & Options -->
+                <div class="filter-category">
+                    <h4 class="filter-category-title">
+                        <i data-lucide="settings" class="filter-category-icon"></i>
+                        Features & Options
+                    </h4>
+                    <div class="filter-grid">
+                        <div class="filter-group">
+                            <label>Key Features</label>
+                            <div class="multi-select-container">
+                                <div class="multi-select-display" id="featuresDisplay">
+                                    <span>Select Features</span>
+                                    <i data-lucide="chevron-down"></i>
+                                </div>
+                                <div class="multi-select-options" id="featuresOptions">
+                                    <div class="multi-select-option">
+                                        <input type="checkbox" value="Sunroof" id="feature-sunroof">
+                                        <label for="feature-sunroof">Sunroof</label>
+                                    </div>
+                                    <div class="multi-select-option">
+                                        <input type="checkbox" value="Leather Seats" id="feature-leather">
+                                        <label for="feature-leather">Leather Seats</label>
+                                    </div>
+                                    <div class="multi-select-option">
+                                        <input type="checkbox" value="Navigation" id="feature-nav">
+                                        <label for="feature-nav">Navigation</label>
+                                    </div>
+                                    <div class="multi-select-option">
+                                        <input type="checkbox" value="Backup Camera" id="feature-camera">
+                                        <label for="feature-camera">Backup Camera</label>
+                                    </div>
+                                    <div class="multi-select-option">
+                                        <input type="checkbox" value="Bluetooth" id="feature-bluetooth">
+                                        <label for="feature-bluetooth">Bluetooth</label>
+                                    </div>
+                                    <div class="multi-select-option">
+                                        <input type="checkbox" value="Heated Seats" id="feature-heated">
+                                        <label for="feature-heated">Heated Seats</label>
+                                    </div>
+                                    <div class="multi-select-option">
+                                        <input type="checkbox" value="Remote Start" id="feature-remote">
+                                        <label for="feature-remote">Remote Start</label>
+                                    </div>
+                                    <div class="multi-select-option">
+                                        <input type="checkbox" value="Apple CarPlay" id="feature-carplay">
+                                        <label for="feature-carplay">Apple CarPlay</label>
+                                    </div>
+                                </div>
+                                <div class="selected-tags" id="featuresSelectedTags"></div>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <label>Condition</label>
+                            <select id="conditionFilter">
+                                <option value="">All Conditions</option>
+                                <option value="New">New</option>
+                                <option value="Used">Used</option>
+                                <option value="Certified">Certified Pre-Owned</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Exterior Color</label>
+                            <div class="multi-select-container">
+                                <div class="multi-select-display" id="colorDisplay">
+                                    <span>Select Colors</span>
+                                    <i data-lucide="chevron-down"></i>
+                                </div>
+                                <div class="multi-select-options" id="colorOptions">
+                                    <div class="multi-select-option">
+                                        <input type="checkbox" value="Black" id="color-black">
+                                        <label for="color-black">Black</label>
+                                    </div>
+                                    <div class="multi-select-option">
+                                        <input type="checkbox" value="White" id="color-white">
+                                        <label for="color-white">White</label>
+                                    </div>
+                                    <div class="multi-select-option">
+                                        <input type="checkbox" value="Silver" id="color-silver">
+                                        <label for="color-silver">Silver</label>
+                                    </div>
+                                    <div class="multi-select-option">
+                                        <input type="checkbox" value="Gray" id="color-gray">
+                                        <label for="color-gray">Gray</label>
+                                    </div>
+                                    <div class="multi-select-option">
+                                        <input type="checkbox" value="Red" id="color-red">
+                                        <label for="color-red">Red</label>
+                                    </div>
+                                    <div class="multi-select-option">
+                                        <input type="checkbox" value="Blue" id="color-blue">
+                                        <label for="color-blue">Blue</label>
+                                    </div>
+                                </div>
+                                <div class="selected-tags" id="colorSelectedTags"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Location & Availability -->
+                <div class="filter-category">
+                    <h4 class="filter-category-title">
+                        <i data-lucide="map-pin" class="filter-category-icon"></i>
+                        Location & Availability
+                    </h4>
+                    <div class="filter-grid">
+                        <div class="filter-group">
+                            <label>Search Radius</label>
+                            <div class="range-slider">
+                                <input type="range" id="radiusRange" min="10" max="500" value="50">
+                                <div class="range-values">
+                                    <span>10 mi</span>
+                                    <span id="radiusValue">50 mi</span>
+                                    <span>500+ mi</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <label>Days on Market</label>
+                            <select id="daysOnMarketFilter">
+                                <option value="">Any Time</option>
+                                <option value="7">Last 7 days</option>
+                                <option value="30">Last 30 days</option>
+                                <option value="60">Last 60 days</option>
+                                <option value="90">Last 90 days</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Price Reduced</label>
+                            <select id="priceReducedFilter">
+                                <option value="">All Listings</option>
+                                <option value="true">Price Reduced Only</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -140,7 +420,7 @@
     <section class="results-section">
         <div class="container">
             <div class="results-header">
-                <h3 class="results-title" id="resultsTitle">6 Cars Found</h3>
+                <h3 class="results-title" id="resultsTitle">Loading Cars...</h3>
                 <div class="results-controls">
                     <div class="view-toggle">
                         <button class="view-btn active" id="gridViewBtn" data-view="grid">
@@ -157,6 +437,8 @@
                         <option value="price-high">Sort by Price: High to Low</option>
                         <option value="mileage">Sort by Mileage</option>
                         <option value="year">Sort by Year</option>
+                        <option value="days-market">Sort by Days on Market</option>
+                        <option value="rating">Sort by Rating</option>
                     </select>
                 </div>
             </div>
@@ -200,7 +482,6 @@
     <!-- Scripts -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script src="data/realistic-cars.js"></script>
     <script src="app.js"></script>
     <script>
