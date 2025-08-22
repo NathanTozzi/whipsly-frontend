@@ -31,22 +31,262 @@ body {
 }
 
 /* Header */
+/* Replace your existing .header styles in style.css with this Tesla Ludicrous Mode inspired header */
+
 .header {
-    background: var(--midnight-navy);
-    box-shadow: 0 4px 6px rgba(10, 31, 68, 0.1);
+    background: linear-gradient(135deg, 
+        var(--midnight-navy) 0%, 
+        #1a2b5a 25%, 
+        #0f1729 50%, 
+        #1e3a8a 75%, 
+        var(--midnight-navy) 100%);
+    background-size: 400% 400%;
+    box-shadow: 0 4px 20px rgba(10, 31, 68, 0.3);
     border-bottom: 1px solid var(--midnight-navy-light);
     position: sticky;
     top: 0;
     z-index: 100;
+    overflow: hidden;
+    animation: ludicrousGradient 4s ease-in-out infinite;
 }
 
+/* Tesla Ludicrous Mode Animation */
+@keyframes ludicrousGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Speed Lines Effect */
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(95, 191, 249, 0.1) 25%, 
+        rgba(95, 191, 249, 0.2) 50%, 
+        rgba(95, 191, 249, 0.1) 75%, 
+        transparent 100%);
+    animation: speedLines 3s linear infinite;
+}
+
+@keyframes speedLines {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+/* Particle Effect */
+.header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(95, 191, 249, 0.3) 2px, transparent 2px),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.2) 1px, transparent 1px),
+        radial-gradient(circle at 40% 80%, rgba(95, 191, 249, 0.2) 1px, transparent 1px),
+        radial-gradient(circle at 90% 70%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        radial-gradient(circle at 10% 90%, rgba(95, 191, 249, 0.3) 1px, transparent 1px);
+    background-size: 100px 100px, 150px 150px, 120px 120px, 80px 80px, 200px 200px;
+    animation: particleFloat 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes particleFloat {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.5;
+    }
+    33% {
+        transform: translateY(-10px) rotate(120deg);
+        opacity: 0.8;
+    }
+    66% {
+        transform: translateY(5px) rotate(240deg);
+        opacity: 0.6;
+    }
+}
+
+/* Enhanced header content with better contrast */
 .header-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 0;
+    padding: 1.25rem 0;
+    position: relative;
+    z-index: 10;
 }
 
+/* Logo enhancement for better visibility */
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    z-index: 15;
+}
+
+.logo-new {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.logo-new:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(95, 191, 249, 0.3);
+}
+
+.logo-image {
+    height: 3.5rem;
+    width: auto;
+    transition: all 0.3s ease;
+    filter: brightness(1.2) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+}
+
+.logo-image:hover {
+    transform: scale(1.05);
+    filter: brightness(1.3) drop-shadow(0 4px 12px rgba(95, 191, 249, 0.4));
+}
+
+.brand-tagline {
+    font-size: 0.875rem;
+    color: var(--chrome-silver);
+    margin: 0;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Enhanced header actions */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    z-index: 15;
+}
+
+.favorites-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--chrome-silver);
+    cursor: pointer;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.favorites-btn:hover {
+    color: var(--sky-blue);
+    background: rgba(95, 191, 249, 0.15);
+    border-color: rgba(95, 191, 249, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(95, 191, 249, 0.3);
+}
+
+.signin-btn {
+    background: linear-gradient(135deg, var(--sky-blue), #4FB3F4);
+    color: white;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(95, 191, 249, 0.4);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.signin-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.signin-btn:hover::before {
+    left: 100%;
+}
+
+.signin-btn:hover {
+    background: linear-gradient(135deg, #4FB3F4, #3B9FE8);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(95, 191, 249, 0.6);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .header::before {
+        animation-duration: 2s; /* Faster on mobile for performance */
+    }
+    
+    .header::after {
+        animation-duration: 6s; /* Slightly faster particles */
+    }
+    
+    .logo-image {
+        height: 3rem;
+    }
+    
+    .header-content {
+        padding: 1rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-image {
+        height: 2.75rem;
+    }
+    
+    .favorites-btn,
+    .signin-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+    
+    /* Reduce animation intensity on very small screens */
+    .header::before {
+        animation-duration: 4s;
+        opacity: 0.5;
+    }
+    
+    .header::after {
+        animation-duration: 10s;
+        opacity: 0.3;
+    }
+}
 /* Logo Section */
 .logo-section {
     display: flex;
