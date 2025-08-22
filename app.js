@@ -1,42 +1,4 @@
-// View car details (placeholder function)
-function viewCarDetails(carId) {
-    const car = mockCars.find(c => c.id === carId);
-    if (!car) return;
-    
-    showCarModal(car);
-}
-
-// Initialize favorites count
-updateFavoritesCount();
-
-// View switching
-function switchView(view) {
-    currentView = view;
-    
-    // Update button states
-    gridViewBtn.classList.toggle('active', view === 'grid');
-    mapViewBtn.classList.toggle('active', view === 'map');
-    
-    if (view === 'grid') {
-        carsGrid.style.display = 'grid';
-        mapContainer.style.display = 'none';
-    } else {
-        carsGrid.style.display = 'none';
-        mapContainer.style.display = 'block';
-        
-        // Initialize map if not already done
-        if (map) {
-            setTimeout(() => {
-                map.invalidateSize();
-                updateMapMarkers();
-            }, 100);
-        }
-    }
-}
-
-// Initialize map
-function initializeMap() {
-    // Mock car data with coordinates
+// Mock car data with coordinates
 const mockCars = [
     {
         id: 1,
@@ -223,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Initialize map
-    initializeMap();
+    setTimeout(initializeMap, 100);
 });
 
 // Search functionality
@@ -322,7 +284,7 @@ function toggleFavorite(carId) {
     }
     
     updateFavoritesCount();
-    renderCars(); // Re-render to update heart icons
+    renderCars();
 }
 
 // Update favorites count
@@ -371,7 +333,7 @@ function createCarCard(car) {
                 </div>
                 
                 <div class="car-price-section">
-                    <div class="car-price">${car.price.toLocaleString()}</div>
+                    <div class="car-price">$${car.price.toLocaleString()}</div>
                     <div class="price-change ${priceChange.isPositive ? 'positive' : 'negative'}">
                         <i data-lucide="trending-up" style="transform: ${priceChange.isPositive ? 'rotate(180deg)' : 'none'}"></i>
                         ${priceChange.percent}% ${priceChange.isPositive ? 'up' : 'down'}
@@ -411,21 +373,232 @@ function createCarCard(car) {
     `;
 }
 
-// Render cars
-function renderCars() {
-    if (currentCars.length === 0) {
-        carsGrid.style.display = 'none';
-        noResults.style.display = 'block';
-    } else {
+// View switching
+function switchView(view) {
+    currentView = view;
+    
+    // Update button states
+    gridViewBtn.classList.toggle('active', view === 'grid');
+    mapViewBtn.classList.toggle('active', view === 'map');
+    
+    if (view === 'grid') {
         carsGrid.style.display = 'grid';
-        noResults.style.display = 'none';
+        mapContainer.style.display = 'none';
+    } else {
+        carsGrid.style.display = 'none';
+        mapContainer.style.display = 'block';
         
-        carsGrid.innerHTML = currentCars.map(car => createCarCard(car)).join('');
-        
-        // Reinitialize Lucide icons for new content
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
+        // Initialize map if not already done
+        if (map) {
+            setTimeout(() => {
+                map.invalidateSize();
+                updateMapMarkers();
+            }, 100);
         }
+    }
+}
+
+// Initialize map
+function initializeMap() {
+    if (typeof L === 'undefined') {
+        console.log('Leaflet not loaded yet, retrying...');
+        setTimeout(initializeMap, 500);
+        return;
+    }
+    
+    try {
+        // Initialize Leaflet map centered on US
+        map = L.map('carMap', {
+            zoomControl: true,
+            scrollWheelZoom: true
+        }).setView([39.8283, -98.5795], 4);
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 18
+        }).addTo(map);
+
+        // Update markers initially
+        updateMapMarkers();
+    } catch (error) {
+        console.error('Error initializing map:', error);
+    }
+}
+
+// Update map markers
+function updateMapMarkers() {
+    if (!map) return;
+    
+    try {
+        // Clear existing markers
+        mapMarkers.forEach(marker => map.removeLayer(marker));
+        mapMarkers = [];
+        
+        // Add markers for current cars
+        currentCars.forEach(car => {
+            const popupContent = `
+                <div class="car-popup">
+                    <div class="car-popup-content">
+                        <img src="${car.image}" alt="${car.year} ${car.make} ${car.model}" class="car-popup-image">
+                        <div class="car-popup-info">
+                            <div class="car-popup-title">${car.year} ${car.make} ${car.model}</div>
+                            <div class="car-popup-price">$${car.price.toLocaleString()}</div>
+                            <div class="car-popup-details">
+                                <span>${car.mileage.toLocaleString()} mi</span>
+                                <span>${car.mpg}</span>
+                            </div>
+                            <button class="car-popup-btn" onclick="viewCarDetails(${car.id})">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const marker = L.marker(car.coordinates)
+                .addTo(map)
+                .bindPopup(popupContent, {
+                    maxWidth: 280,
+                    className: 'car-popup'
+                });
+            
+            mapMarkers.push(marker);
+        });
+        
+        // Fit map to show all markers if there are any
+        if (mapMarkers.length > 0) {
+            const group = new L.featureGroup(mapMarkers);
+            map.fitBounds(group.getBounds().pad(0.1));
+        }
+    } catch (error) {
+        console.error('Error updating map markers:', error);
+    }
+}
+
+// Show car modal
+function showCarModal(car) {
+    const priceChange = calculatePriceChange(car);
+    const modalTitle = document.getElementById('modalCarTitle');
+    const modalContent = document.getElementById('modalCarContent');
+    
+    modalTitle.textContent = `${car.year} ${car.make} ${car.model}`;
+    
+    modalContent.innerHTML = `
+        <img src="${car.image}" alt="${car.year} ${car.make} ${car.model}" class="modal-car-image">
+        
+        <div class="modal-car-info">
+            <div class="modal-price-section">
+                <div class="modal-price">$${car.price.toLocaleString()}</div>
+                <div class="modal-dealer">
+                    <div class="modal-dealer-name">${car.dealer}</div>
+                    <div class="modal-dealer-location">${car.location}</div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>Vehicle Specifications</h4>
+                <div class="modal-specs">
+                    <div class="modal-spec">
+                        <i data-lucide="gauge" class="modal-spec-icon"></i>
+                        <span class="modal-spec-text">${car.mileage.toLocaleString()} miles</span>
+                    </div>
+                    <div class="modal-spec">
+                        <i data-lucide="fuel" class="modal-spec-icon"></i>
+                        <span class="modal-spec-text">${car.mpg}</span>
+                    </div>
+                    <div class="modal-spec">
+                        <i data-lucide="settings" class="modal-spec-icon"></i>
+                        <span class="modal-spec-text">${car.transmission}</span>
+                    </div>
+                    <div class="modal-spec">
+                        <i data-lucide="zap" class="modal-spec-icon"></i>
+                        <span class="modal-spec-text">${car.drivetrain}</span>
+                    </div>
+                    <div class="modal-spec">
+                        <i data-lucide="calendar" class="modal-spec-icon"></i>
+                        <span class="modal-spec-text">${car.daysOnMarket} days on market</span>
+                    </div>
+                    <div class="modal-spec">
+                        <i data-lucide="star" class="modal-spec-icon"></i>
+                        <span class="modal-spec-text">${car.rating}/5 rating</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>Price History</h4>
+                <div class="price-change ${priceChange.isPositive ? 'positive' : 'negative'}">
+                    <i data-lucide="trending-up" style="transform: ${priceChange.isPositive ? 'rotate(180deg)' : 'none'}"></i>
+                    ${priceChange.percent}% ${priceChange.isPositive ? 'increase' : 'decrease'} from original listing
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>Features & Options</h4>
+                <div class="modal-features">
+                    ${car.features.map(feature => `<span class="modal-feature">${feature}</span>`).join('')}
+                </div>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-primary" onclick="contactDealer(${car.id})">
+                    Contact Dealer
+                </button>
+                <button class="modal-btn modal-btn-secondary" onclick="toggleFavorite(${car.id}); renderCars();">
+                    ${favorites.has(car.id) ? 'Remove from' : 'Add to'} Favorites
+                </button>
+            </div>
+        </div>
+    `;
+    
+    carModal.style.display = 'flex';
+    
+    // Reinitialize Lucide icons for modal content
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+}
+
+// Close modal
+function closeModal() {
+    carModal.style.display = 'none';
+}
+
+// Contact dealer function
+function contactDealer(carId) {
+    const car = mockCars.find(c => c.id === carId);
+    alert(`Contact ${car.dealer} about the ${car.year} ${car.make} ${car.model}\n\nIn a real application, this would open a contact form or provide dealer contact information.`);
+}
+
+// View car details
+function viewCarDetails(carId) {
+    const car = mockCars.find(c => c.id === carId);
+    if (!car) return;
+    
+    showCarModal(car);
+}
+
+// Update render cars function to handle both views
+function renderCars() {
+    if (currentView === 'grid') {
+        if (currentCars.length === 0) {
+            carsGrid.style.display = 'none';
+            noResults.style.display = 'block';
+        } else {
+            carsGrid.style.display = 'grid';
+            noResults.style.display = 'none';
+            
+            carsGrid.innerHTML = currentCars.map(car => createCarCard(car)).join('');
+            
+            // Reinitialize Lucide icons for new content
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+    } else {
+        // Update map markers when in map view
+        updateMapMarkers();
     }
 }
 
@@ -434,12 +607,6 @@ function updateResultsTitle() {
     const count = currentCars.length;
     const searchText = filters.search ? ` for "${filters.search}"` : '';
     resultsTitle.textContent = `${count} Car${count !== 1 ? 's' : ''} Found${searchText}`;
-}
-
-// View car details (placeholder function)
-function viewCarDetails(carId) {
-    const car = mockCars.find(c => c.id === carId);
-    alert(`View details for ${car.year} ${car.make} ${car.model}\n\nThis would open a detailed view page in a real application.`);
 }
 
 // Initialize favorites count
