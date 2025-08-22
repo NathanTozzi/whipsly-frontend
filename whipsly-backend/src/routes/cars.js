@@ -1,6 +1,6 @@
 const express = require('express');
 const { body, validationResult, query } = require('express-validator');
-const { Car, Dealer, Favorite, User } = require('../src/models');
+const { Car, Dealer, Favorite, User } = require('../models');
 const { auth, optionalAuth, requireAdmin, requireDealer } = require('../middleware/auth');
 
 const router = express.Router();
