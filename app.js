@@ -946,7 +946,140 @@ function getRandomInteriorColor() {
 }
 
 // Main realistic car generator function
-function generateRealisticCars(count = 200) {
+// Replace only the placeholder function with this complete car generator
+function generateRealisticCars(count = 150) {
+    // Base car models with realistic pricing ranges and popularity
+    const carModels = {
+        'Toyota': {
+            'Camry': { basePrice: 25000, popularity: 85, depreciation: 0.12 },
+            'Corolla': { basePrice: 22000, popularity: 90, depreciation: 0.15 },
+            'RAV4': { basePrice: 28000, popularity: 88, depreciation: 0.10 },
+            'Prius': { basePrice: 27000, popularity: 70, depreciation: 0.18 },
+            'Highlander': { basePrice: 35000, popularity: 75, depreciation: 0.14 },
+            'Tacoma': { basePrice: 32000, popularity: 80, depreciation: 0.08 }
+        },
+        'Honda': {
+            'Civic': { basePrice: 23000, popularity: 85, depreciation: 0.13 },
+            'Accord': { basePrice: 26000, popularity: 80, depreciation: 0.12 },
+            'CR-V': { basePrice: 28000, popularity: 88, depreciation: 0.11 },
+            'Pilot': { basePrice: 38000, popularity: 70, depreciation: 0.15 }
+        },
+        'Ford': {
+            'F-150': { basePrice: 33000, popularity: 95, depreciation: 0.09 },
+            'Escape': { basePrice: 26000, popularity: 75, depreciation: 0.16 },
+            'Explorer': { basePrice: 35000, popularity: 70, depreciation: 0.17 },
+            'Mustang': { basePrice: 31000, popularity: 65, depreciation: 0.14 }
+        },
+        'Tesla': {
+            'Model 3': { basePrice: 40000, popularity: 75, depreciation: 0.15 },
+            'Model Y': { basePrice: 52000, popularity: 80, depreciation: 0.12 }
+        },
+        'BMW': {
+            'X3': { basePrice: 45000, popularity: 40, depreciation: 0.22 },
+            '3 Series': { basePrice: 42000, popularity: 45, depreciation: 0.20 }
+        }
+    };
+
+    // Real dealer locations
+    const dealers = {
+        'Los Angeles, CA': { lat: 34.0522, lng: -118.2437, marketMultiplier: 1.15 },
+        'New York, NY': { lat: 40.7128, lng: -74.0060, marketMultiplier: 1.18 },
+        'Chicago, IL': { lat: 41.8781, lng: -87.6298, marketMultiplier: 1.05 },
+        'Houston, TX': { lat: 29.7604, lng: -95.3698, marketMultiplier: 0.98 },
+        'Phoenix, AZ': { lat: 33.4484, lng: -112.0740, marketMultiplier: 1.06 },
+        'Philadelphia, PA': { lat: 39.9526, lng: -75.1652, marketMultiplier: 1.06 },
+        'San Antonio, TX': { lat: 29.4241, lng: -98.4936, marketMultiplier: 0.95 },
+        'San Diego, CA': { lat: 32.7157, lng: -117.1611, marketMultiplier: 1.12 },
+        'Dallas, TX': { lat: 32.7767, lng: -96.7970, marketMultiplier: 1.02 },
+        'Charlotte, NC': { lat: 35.2271, lng: -80.8431, marketMultiplier: 0.99 }
+    };
+
+    // Car features
+    const features = [
+        'Apple CarPlay', 'Android Auto', 'Bluetooth', 'Backup Camera', 'Heated Seats',
+        'Navigation System', 'Leather Interior', 'Sunroof', 'Remote Start', 'Keyless Entry',
+        'Lane Departure Warning', 'Blind Spot Monitoring', 'Premium Audio', 'WiFi Hotspot',
+        'Power Liftgate', 'Adaptive Cruise Control', 'Wireless Charging', 'Cooled Seats'
+    ];
+
+    // Helper functions
+    function generateVIN() {
+        const chars = 'ABCDEFGHJKLMNPRSTUVWXYZ0123456789';
+        let vin = '';
+        for (let i = 0; i < 17; i++) {
+            vin += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return vin;
+    }
+
+    function calculateMileage(year) {
+        const currentYear = 2024;
+        const age = currentYear - year;
+        const avgMilesPerYear = 10000 + Math.random() * 5000;
+        const baseMileage = age * avgMilesPerYear;
+        const variation = baseMileage * (Math.random() * 0.4 - 0.2);
+        return Math.max(100, Math.round(baseMileage + variation));
+    }
+
+    function calculatePrice(basePrice, year, mileage, location, depreciation) {
+        const currentYear = 2024;
+        const age = currentYear - year;
+        
+        let price = basePrice * Math.pow(1 - depreciation, age);
+        
+        const avgMileage = age * 12000;
+        const mileageDiff = mileage - avgMileage;
+        const mileageAdjustment = mileageDiff * -0.05;
+        price += mileageAdjustment;
+        
+        const locationData = dealers[location];
+        if (locationData) {
+            price *= locationData.marketMultiplier;
+        }
+        
+        price *= (0.95 + Math.random() * 0.1);
+        return Math.round(price / 500) * 500;
+    }
+
+    function generateMPG(make, model) {
+        if (make === 'Tesla') return '120 MPGe';
+        if (model.includes('Prius')) return '54/50 MPG';
+        if (model.includes('F-150')) return '20/26 MPG';
+        
+        const city = 22 + Math.floor(Math.random() * 10);
+        const highway = 28 + Math.floor(Math.random() * 12);
+        return `${city}/${highway} MPG`;
+    }
+
+    function getRandomFeatures() {
+        const numFeatures = 3 + Math.floor(Math.random() * 4);
+        const selected = [];
+        for (let i = 0; i < numFeatures; i++) {
+            const feature = features[Math.floor(Math.random() * features.length)];
+            if (!selected.includes(feature)) {
+                selected.push(feature);
+            }
+        }
+        return selected;
+    }
+
+    function generatePriceHistory(currentPrice) {
+        const history = [];
+        let price = currentPrice;
+        
+        for (let i = 3; i >= 0; i--) {
+            const change = Math.random() < 0.7 ? 
+                Math.random() * 1000 + 500 : 
+                -(Math.random() * 800);
+            
+            price += change;
+            history.unshift(Math.round(price / 100) * 100);
+        }
+        
+        return history;
+    }
+
+    // Generate cars
     const cars = [];
     let carId = 1;
     
@@ -959,46 +1092,28 @@ function generateRealisticCars(count = 200) {
     });
     
     for (let i = 0; i < count; i++) {
-        let selectedCar;
-        const random = Math.random() * 100;
-        let cumulative = 0;
+        // Select random car
+        const selectedCar = allCombinations[Math.floor(Math.random() * allCombinations.length)];
         
-        for (const combo of allCombinations) {
-            cumulative += combo.popularity / 10;
-            if (random <= cumulative || combo === allCombinations[allCombinations.length - 1]) {
-                selectedCar = combo;
-                break;
-            }
-        }
-        
-        const yearWeights = [
-            { year: 2024, weight: 15 },
-            { year: 2023, weight: 25 },
-            { year: 2022, weight: 20 },
-            { year: 2021, weight: 15 },
-            { year: 2020, weight: 10 },
-            { year: 2019, weight: 8 },
-            { year: 2018, weight: 4 },
-            { year: 2017, weight: 3 }
-        ];
-        
+        // Generate year (weighted toward recent)
+        const yearOptions = [2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017];
+        const yearWeights = [15, 25, 20, 15, 10, 8, 4, 3];
         const randomYear = Math.random() * 100;
         let cumulativeWeight = 0;
         let year = 2024;
         
-        for (const { year: y, weight } of yearWeights) {
-            cumulativeWeight += weight;
+        for (let j = 0; j < yearOptions.length; j++) {
+            cumulativeWeight += yearWeights[j];
             if (randomYear <= cumulativeWeight) {
-                year = y;
+                year = yearOptions[j];
                 break;
             }
         }
         
-        const mileage = calculateRealisticMileage(year);
-        const locations = Object.keys(dealerLocations);
+        const mileage = calculateMileage(year);
+        const locations = Object.keys(dealers);
         const location = locations[Math.floor(Math.random() * locations.length)];
-        const price = calculateRealisticPrice(selectedCar.basePrice, year, mileage, location, selectedCar.depreciation);
-        const daysOnMarket = generateRealisticDaysOnMarket(selectedCar.popularity);
+        const price = calculatePrice(selectedCar.basePrice, year, mileage, location, selectedCar.depreciation);
         
         const car = {
             id: carId++,
@@ -1008,22 +1123,21 @@ function generateRealisticCars(count = 200) {
             price: price,
             mileage: mileage,
             location: location,
-            coordinates: [dealerLocations[location].lat, dealerLocations[location].lng],
-            dealer: generateRealisticDealerName(selectedCar.make, location),
-            image: `https://images.unsplash.com/photo-${1500000000000 + Math.floor(Math.random() * 100000000)}?w=400&h=300&fit=crop&auto=format&q=80`,
-            priceHistory: generateRealisticPriceHistory(price),
-            daysOnMarket: daysOnMarket,
-            mpg: generateRealisticMPG(selectedCar.make, selectedCar.model, year),
-            transmission: generateRealisticTransmission(selectedCar.make, selectedCar.model, year),
-            drivetrain: generateRealisticDrivetrain(selectedCar.make, selectedCar.model),
-            features: getRandomCarFeatures(selectedCar.make, price),
-            rating: generateRealisticRating(selectedCar.make, selectedCar.popularity),
+            coordinates: [dealers[location].lat, dealers[location].lng],
+            dealer: `${selectedCar.make} of ${location.split(',')[0]}`,
+            priceHistory: generatePriceHistory(price),
+            daysOnMarket: Math.floor(Math.random() * 60) + 1,
+            mpg: generateMPG(selectedCar.make, selectedCar.model),
+            transmission: 'Automatic',
+            drivetrain: 'FWD',
+            features: getRandomFeatures(),
+            rating: 3.5 + Math.random() * 1.3,
             vin: generateVIN(),
             condition: 'Used',
-            bodyStyle: getCarBodyStyle(selectedCar.model),
+            bodyStyle: 'Sedan',
             fuelType: selectedCar.make === 'Tesla' ? 'Electric' : 'Gasoline',
-            exteriorColor: getRandomExteriorColor(),
-            interiorColor: getRandomInteriorColor()
+            exteriorColor: ['White', 'Black', 'Silver', 'Red', 'Blue'][Math.floor(Math.random() * 5)],
+            interiorColor: ['Black', 'Gray', 'Beige'][Math.floor(Math.random() * 3)]
         };
         
         cars.push(car);
