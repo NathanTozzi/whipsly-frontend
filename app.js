@@ -180,7 +180,45 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize map
     setTimeout(initializeMap, 100);
+    
+    // Initialize car card click handlers
+    initializeCarCardClicks();
 });
+
+// Function to handle car card clicks (both button and entire card)
+function initializeCarCardClicks() {
+    // Handle clicks on the entire car card
+    document.addEventListener('click', function(e) {
+        const carCard = e.target.closest('.car-card');
+        
+        // Only proceed if we clicked on a car card
+        if (!carCard) return;
+        
+        // Don't trigger card click if we clicked on the favorite button
+        if (e.target.closest('.favorite-btn')) {
+            e.stopPropagation();
+            return;
+        }
+        
+        // Don't trigger if we clicked on the View Details button directly
+        if (e.target.closest('.view-details-btn')) {
+            e.stopPropagation();
+            return;
+        }
+        
+        // Extract car ID from the card (we'll add this as a data attribute)
+        const viewDetailsBtn = carCard.querySelector('.view-details-btn');
+        if (viewDetailsBtn && viewDetailsBtn.onclick) {
+            // Extract car ID from the onclick attribute
+            const onclickStr = viewDetailsBtn.getAttribute('onclick');
+            const carIdMatch = onclickStr.match(/viewCarDetails\((\d+)\)/);
+            if (carIdMatch) {
+                const carId = parseInt(carIdMatch[1]);
+                viewCarDetails(carId);
+            }
+        }
+    });
+}
 
 // Search functionality
 function handleSearch(e) {
@@ -308,10 +346,10 @@ function createCarCard(car) {
     const isNewListing = car.daysOnMarket <= 7;
     
     return `
-        <div class="car-card">
+        <div class="car-card" data-car-id="${car.id}">
             <div class="car-image-container">
                 <img src="${getCarImage(car.make, car.model)}" alt="${car.year} ${car.make} ${car.model}" class="car-image">
-                <button class="favorite-btn ${isFavorited ? 'favorited' : ''}" onclick="toggleFavorite(${car.id})">
+                <button class="favorite-btn ${isFavorited ? 'favorited' : ''}" onclick="event.stopPropagation(); toggleFavorite(${car.id})">
                     <i data-lucide="heart" ${isFavorited ? 'class="favorited"' : ''}></i>
                 </button>
                 ${isNewListing ? '<div class="new-listing-badge">New Listing</div>' : ''}
@@ -359,7 +397,7 @@ function createCarCard(car) {
                     ).join('')}
                 </div>
                 
-                <button class="view-details-btn" onclick="viewCarDetails(${car.id})">
+                <button class="view-details-btn" onclick="event.stopPropagation(); viewCarDetails(${car.id})">
                     View Details
                 </button>
             </div>
@@ -518,7 +556,7 @@ function showCarModal(car) {
                         <span class="modal-spec-text">${car.rating}/5 rating</span>
                     </div>
                     <div class="modal-spec">
-                        <i data-lucide="card" class="modal-spec-icon"></i>
+                        <i data-lucide="credit-card" class="modal-spec-icon"></i>
                         <span class="modal-spec-text">VIN: ${car.vin}</span>
                     </div>
                     <div class="modal-spec">
@@ -555,6 +593,7 @@ function showCarModal(car) {
     `;
     
     carModal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
     
     // Reinitialize Lucide icons for modal content
     if (typeof lucide !== 'undefined') {
@@ -565,7 +604,15 @@ function showCarModal(car) {
 // Close modal
 function closeModal() {
     carModal.style.display = 'none';
+    document.body.style.overflow = 'auto';
 }
+
+// Handle escape key and outside clicks for modal
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+    }
+});
 
 // Contact dealer function
 function contactDealer(carId) {
@@ -597,6 +644,11 @@ function renderCars() {
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
             }
+            
+            // Re-initialize car card click handlers after rendering
+            setTimeout(() => {
+                initializeCarCardClicks();
+            }, 100);
         }
     } else {
         // Update map markers when in map view
@@ -616,3 +668,11 @@ updateFavoritesCount();
 
 // Add the car generation functions here (copy from the realistic-cars.js file)
 // [INSERT THE ENTIRE REALISTIC CAR GENERATOR CODE HERE]
+
+// Placeholder for generateRealisticCars function - you'll need to add your car generator code here
+function generateRealisticCars(count) {
+    // This should contain your realistic car generation logic
+    // For now, returning an empty array - you'll need to add your generator code
+    console.log('Please add your generateRealisticCars function here');
+    return [];
+}
