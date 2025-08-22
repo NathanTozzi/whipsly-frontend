@@ -1,123 +1,71 @@
-// Mock car data with coordinates
-const mockCars = [
-    {
-        id: 1,
-        make: 'Tesla',
-        model: 'Model 3',
-        year: 2023,
-        price: 42990,
-        mileage: 12500,
-        location: 'San Francisco, CA',
-        coordinates: [37.7749, -122.4194],
-        dealer: 'Tesla San Francisco',
-        image: 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=400&h=300&fit=crop',
-        priceHistory: [45990, 44990, 43990, 42990],
-        daysOnMarket: 12,
-        mpg: '120 MPGe',
-        transmission: 'Automatic',
-        drivetrain: 'RWD',
-        features: ['Autopilot', 'Premium Interior', 'Supercharging', 'Glass Roof', 'Heated Seats'],
-        rating: 4.8
-    },
-    {
-        id: 2,
-        make: 'Honda',
-        model: 'Civic',
-        year: 2024,
-        price: 28400,
-        mileage: 5200,
-        location: 'Los Angeles, CA',
-        coordinates: [34.0522, -118.2437],
-        dealer: 'Honda of LA',
-        image: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=400&h=300&fit=crop',
-        priceHistory: [29900, 29400, 28900, 28400],
-        daysOnMarket: 8,
-        mpg: '32/42 MPG',
-        transmission: 'CVT',
-        drivetrain: 'FWD',
-        features: ['Honda Sensing', 'Apple CarPlay', 'LED Headlights', 'Lane Assist', 'Backup Camera'],
-        rating: 4.6
-    },
-    {
-        id: 3,
-        make: 'BMW',
-        model: 'X3',
-        year: 2023,
-        price: 52900,
-        mileage: 18700,
-        location: 'Austin, TX',
-        coordinates: [30.2672, -97.7431],
-        dealer: 'BMW of Austin',
-        image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=400&h=300&fit=crop',
-        priceHistory: [55900, 54900, 53900, 52900],
-        daysOnMarket: 22,
-        mpg: '23/29 MPG',
-        transmission: '8-Speed Auto',
-        drivetrain: 'AWD',
-        features: ['iDrive 7', 'Premium Package', 'Harman Kardon', 'Panoramic Roof', 'Sport Package'],
-        rating: 4.5
-    },
-    {
-        id: 4,
-        make: 'Ford',
-        model: 'F-150',
-        year: 2024,
-        price: 48200,
-        mileage: 8900,
-        location: 'Dallas, TX',
-        coordinates: [32.7767, -96.7970],
-        dealer: 'Ford Dallas',
-        image: 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=400&h=300&fit=crop',
-        priceHistory: [49900, 49200, 48700, 48200],
-        daysOnMarket: 15,
-        mpg: '20/24 MPG',
-        transmission: '10-Speed Auto',
-        drivetrain: '4WD',
-        features: ['SYNC 4', 'Pro Power Onboard', 'Bed Liner', 'Tow Package', 'Off-Road Package'],
-        rating: 4.7
-    },
-    {
-        id: 5,
-        make: 'Toyota',
-        model: 'Camry Hybrid',
-        year: 2024,
-        price: 34500,
-        mileage: 3200,
-        location: 'Seattle, WA',
-        coordinates: [47.6062, -122.3321],
-        dealer: 'Toyota Seattle',
-        image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=400&h=300&fit=crop',
-        priceHistory: [35900, 35200, 34800, 34500],
-        daysOnMarket: 5,
-        mpg: '51/53 MPG',
-        transmission: 'CVT',
-        drivetrain: 'FWD',
-        features: ['Toyota Safety Sense 2.0', 'JBL Audio', 'Wireless Charging', 'Adaptive Cruise', 'Lane Centering'],
-        rating: 4.6
-    },
-    {
-        id: 6,
-        make: 'Mercedes',
-        model: 'C-Class',
-        year: 2023,
-        price: 46800,
-        mileage: 15600,
-        location: 'Miami, FL',
-        coordinates: [25.7617, -80.1918],
-        dealer: 'Mercedes Miami',
-        image: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=400&h=300&fit=crop',
-        priceHistory: [49800, 48800, 47800, 46800],
-        daysOnMarket: 28,
-        mpg: '23/34 MPG',
-        transmission: '9-Speed Auto',
-        drivetrain: 'RWD',
-        features: ['MBUX', 'Premium Package', 'AMG Line', 'Burmester Audio', 'Driver Assistance'],
-        rating: 4.4
-    }
-];
+// Load realistic car data generator
+// Include the realistic car generator functions (copy from previous artifact)
+
+// Generate realistic car database on page load
+let mockCars = [];
+
+// Initialize realistic car data
+function initializeCarData() {
+    console.log('🚗 Generating realistic car inventory...');
+    mockCars = generateRealisticCars(150); // Generate 150 realistic cars
+    console.log(`✅ Generated ${mockCars.length} vehicles with realistic market data`);
+    
+    // Sort by popularity and recency (newest and most popular first)
+    mockCars.sort((a, b) => {
+        // Prioritize newer cars and popular models
+        const aScore = a.year * 0.1 + (a.rating * 20);
+        const bScore = b.year * 0.1 + (b.rating * 20);
+        return bScore - aScore;
+    });
+}
+
+// Enhanced market insights based on real data
+function calculateMarketInsights() {
+    if (mockCars.length === 0) return;
+    
+    const totalCars = mockCars.length;
+    const avgPrice = mockCars.reduce((sum, car) => sum + car.price, 0) / totalCars;
+    const avgDaysOnMarket = mockCars.reduce((sum, car) => sum + car.daysOnMarket, 0) / totalCars;
+    
+    // Calculate price drops (cars with negative price history)
+    const carsWithPriceDrops = mockCars.filter(car => {
+        const priceHistory = car.priceHistory;
+        return priceHistory[priceHistory.length - 1] < priceHistory[0];
+    });
+    const priceDropPercentage = (carsWithPriceDrops.length / totalCars) * 100;
+    
+    // Update the insights on the page
+    updateInsightDisplay('avg-price', `$${Math.round(avgPrice).toLocaleString()}`);
+    updateInsightDisplay('total-listings', totalCars.toLocaleString());
+    updateInsightDisplay('avg-days', `${Math.round(avgDaysOnMarket)} days`);
+    updateInsightDisplay('price-drops', `${Math.round(priceDropPercentage)}%`);
+}
+
+function updateInsightDisplay(type, value) {
+    // This will update the insight cards with real calculated data
+    const selectors = {
+        'avg-price': '.insight-value:nth-child(1)',
+        'total-listings': '.insight-value:nth-child(2)', 
+        'avg-days': '.insight-value:nth-child(3)',
+        'price-drops': '.insight-value:nth-child(4)'
+    };
+    
+    // Update insight values if elements exist
+    document.querySelectorAll('.insight-value').forEach((el, index) => {
+        switch(index) {
+            case 0: el.textContent = `$${Math.round(mockCars.reduce((sum, car) => sum + car.price, 0) / mockCars.length).toLocaleString()}`; break;
+            case 1: el.textContent = mockCars.length.toLocaleString(); break;
+            case 2: el.textContent = `${Math.round(mockCars.reduce((sum, car) => sum + car.daysOnMarket, 0) / mockCars.length)} days`; break;
+            case 3: 
+                const dropsCount = mockCars.filter(car => car.priceHistory[car.priceHistory.length - 1] < car.priceHistory[0]).length;
+                el.textContent = `${Math.round((dropsCount / mockCars.length) * 100)}%`;
+                break;
+        }
+    });
+}
 
 // State management
-let currentCars = [...mockCars];
+let currentCars = [];
 let favorites = new Set();
 let currentView = 'grid';
 let map = null;
@@ -153,10 +101,56 @@ const maxMileageInput = document.getElementById('maxMileage');
 const makeFilterInput = document.getElementById('makeFilter');
 const yearFilterInput = document.getElementById('yearFilter');
 
+// Enhanced car image URLs (using Unsplash with car-specific searches)
+const carImageUrls = {
+    'Toyota Camry': 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=400&h=300&fit=crop',
+    'Toyota Corolla': 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=400&h=300&fit=crop',
+    'Toyota RAV4': 'https://images.unsplash.com/photo-1611651071253-7a4de5cb2b46?w=400&h=300&fit=crop',
+    'Honda Civic': 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=400&h=300&fit=crop',
+    'Honda Accord': 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=400&h=300&fit=crop',
+    'Ford F-150': 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=400&h=300&fit=crop',
+    'Tesla Model 3': 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=400&h=300&fit=crop',
+    'Tesla Model Y': 'https://images.unsplash.com/photo-1617788138017-80ad40651399?w=400&h=300&fit=crop',
+    'BMW X3': 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=400&h=300&fit=crop',
+    'Mercedes-Benz C-Class': 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=400&h=300&fit=crop'
+};
+
+// Enhanced image selection
+function getCarImage(make, model) {
+    const carKey = `${make} ${model}`;
+    
+    // Check if we have a specific image for this car
+    if (carImageUrls[carKey]) {
+        return carImageUrls[carKey];
+    }
+    
+    // Fallback to generic car images based on make
+    const makeImages = {
+        'Toyota': 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=400&h=300&fit=crop',
+        'Honda': 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=400&h=300&fit=crop',
+        'Ford': 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=400&h=300&fit=crop',
+        'Tesla': 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=400&h=300&fit=crop',
+        'BMW': 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=400&h=300&fit=crop',
+        'Mercedes-Benz': 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=400&h=300&fit=crop',
+        'Chevrolet': 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=400&h=300&fit=crop',
+        'Audi': 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=400&h=300&fit=crop'
+    };
+    
+    return makeImages[make] || 'https://images.unsplash.com/photo-1502877338535-766e1452684a?w=400&h=300&fit=crop';
+}
+
 // Event listeners
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize realistic car data first
+    initializeCarData();
+    
+    // Set initial current cars
+    currentCars = [...mockCars];
+    
+    // Render cars and update insights
     renderCars();
     updateResultsTitle();
+    calculateMarketInsights();
     
     // Search functionality
     searchInput.addEventListener('input', handleSearch);
@@ -316,7 +310,7 @@ function createCarCard(car) {
     return `
         <div class="car-card">
             <div class="car-image-container">
-                <img src="${car.image}" alt="${car.year} ${car.make} ${car.model}" class="car-image">
+                <img src="${getCarImage(car.make, car.model)}" alt="${car.year} ${car.make} ${car.model}" class="car-image">
                 <button class="favorite-btn ${isFavorited ? 'favorited' : ''}" onclick="toggleFavorite(${car.id})">
                     <i data-lucide="heart" ${isFavorited ? 'class="favorited"' : ''}></i>
                 </button>
@@ -440,7 +434,7 @@ function updateMapMarkers() {
             const popupContent = `
                 <div class="car-popup">
                     <div class="car-popup-content">
-                        <img src="${car.image}" alt="${car.year} ${car.make} ${car.model}" class="car-popup-image">
+                        <img src="${getCarImage(car.make, car.model)}" alt="${car.year} ${car.make} ${car.model}" class="car-popup-image">
                         <div class="car-popup-info">
                             <div class="car-popup-title">${car.year} ${car.make} ${car.model}</div>
                             <div class="car-popup-price">$${car.price.toLocaleString()}</div>
@@ -485,7 +479,7 @@ function showCarModal(car) {
     modalTitle.textContent = `${car.year} ${car.make} ${car.model}`;
     
     modalContent.innerHTML = `
-        <img src="${car.image}" alt="${car.year} ${car.make} ${car.model}" class="modal-car-image">
+        <img src="${getCarImage(car.make, car.model)}" alt="${car.year} ${car.make} ${car.model}" class="modal-car-image">
         
         <div class="modal-car-info">
             <div class="modal-price-section">
@@ -522,6 +516,14 @@ function showCarModal(car) {
                     <div class="modal-spec">
                         <i data-lucide="star" class="modal-spec-icon"></i>
                         <span class="modal-spec-text">${car.rating}/5 rating</span>
+                    </div>
+                    <div class="modal-spec">
+                        <i data-lucide="card" class="modal-spec-icon"></i>
+                        <span class="modal-spec-text">VIN: ${car.vin}</span>
+                    </div>
+                    <div class="modal-spec">
+                        <i data-lucide="palette" class="modal-spec-icon"></i>
+                        <span class="modal-spec-text">${car.exteriorColor} / ${car.interiorColor}</span>
                     </div>
                 </div>
             </div>
@@ -568,7 +570,7 @@ function closeModal() {
 // Contact dealer function
 function contactDealer(carId) {
     const car = mockCars.find(c => c.id === carId);
-    alert(`Contact ${car.dealer} about the ${car.year} ${car.make} ${car.model}\n\nIn a real application, this would open a contact form or provide dealer contact information.`);
+    alert(`Contact ${car.dealer} about the ${car.year} ${car.make} ${car.model}\n\nPhone: (555) 123-4567\nAddress: ${car.location}\n\nIn a real application, this would open a contact form or provide dealer contact information.`);
 }
 
 // View car details
@@ -611,3 +613,6 @@ function updateResultsTitle() {
 
 // Initialize favorites count
 updateFavoritesCount();
+
+// Add the car generation functions here (copy from the realistic-cars.js file)
+// [INSERT THE ENTIRE REALISTIC CAR GENERATOR CODE HERE]
