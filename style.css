@@ -157,7 +157,7 @@ body {
 .hero {
     background: linear-gradient(135deg, var(--midnight-navy), var(--midnight-navy-light), #2D4A72);
     color: white;
-    padding: 4rem 0;
+    padding: 2.5rem 0;
     text-align: center;
     position: relative;
     overflow: hidden;
