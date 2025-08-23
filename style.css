@@ -157,7 +157,7 @@ body {
 .hero {
     background: linear-gradient(135deg, var(--midnight-navy), var(--midnight-navy-light), #2D4A72);
     color: white;
-    padding: 4rem 0;
+    padding: 1rem 0;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -180,9 +180,9 @@ body {
 }
 
 .hero-title {
-    font-size: 3rem;
+    font-size: 1.5rem;
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     background: linear-gradient(135deg, white, var(--sky-blue));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -190,13 +190,13 @@ body {
 }
 
 .hero-subtitle {
-    font-size: 1.25rem;
-    margin-bottom: 2rem;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
     color: var(--chrome-silver);
 }
 
 .search-container {
-    max-width: 32rem;
+    max-width: 24rem;
     margin: 0 auto;
 }
 
@@ -208,17 +208,18 @@ body {
 
 .search-icon {
     position: absolute;
-    left: 1rem;
+    left: 0.5rem;
     color: var(--chrome-silver);
     z-index: 10;
+    font-size: 0.875rem;
 }
 
 .search-input {
     width: 100%;
-    padding: 1rem 1rem 1rem 3rem;
-    font-size: 1.125rem;
+    padding: 0.5rem 0.5rem 0.5rem 2rem;
+    font-size: 0.875rem;
     border: 2px solid transparent;
-    border-radius: 0.75rem;
+    border-radius: 0.5rem;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     outline: none;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
