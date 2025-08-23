@@ -30,7 +30,7 @@ body {
     padding: 0 1rem;
 }
 
-/* Header */
+/* Header - Updated for shorter header */
 .header {
     background: var(--midnight-navy);
     box-shadow: 0 4px 20px rgba(10, 31, 68, 0.3);
@@ -46,7 +46,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.25rem 0;
+    padding: 0.5rem 0; /* Reduced from 0.25rem to 0.5rem for better balance */
     position: relative;
     z-index: 10;
     background: transparent;
@@ -67,7 +67,7 @@ body {
 }
 
 .logo-image {
-    height: 4.5rem;
+    height: 2.5rem; /* Reduced from 4.5rem to 2.5rem for better proportion */
     width: auto;
     transition: all 0.3s ease;
     filter: brightness(1.2) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
@@ -79,7 +79,7 @@ body {
 }
 
 .brand-tagline {
-    font-size: 0.875rem;
+    font-size: 0.75rem; /* Slightly reduced for proportional balance */
     color: var(--chrome-silver);
     margin: 0;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
@@ -97,7 +97,7 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.75rem 1.25rem;
+    padding: 0.5rem 1rem; /* Reduced padding for shorter header */
     background: rgba(209, 213, 219, 0.1);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(209, 213, 219, 0.2);
@@ -106,6 +106,7 @@ body {
     border-radius: 0.75rem;
     transition: all 0.3s ease;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    font-size: 0.875rem; /* Slightly smaller text */
 }
 
 .favorites-btn:hover {
@@ -119,7 +120,7 @@ body {
 .signin-btn {
     background: linear-gradient(135deg, var(--chrome-silver), #B8BCC8);
     color: var(--midnight-navy);
-    padding: 0.75rem 2rem;
+    padding: 0.5rem 1.5rem; /* Reduced padding for shorter header */
     border: none;
     border-radius: 0.75rem;
     font-weight: 600;
@@ -128,6 +129,7 @@ body {
     box-shadow: 0 4px 15px rgba(209, 213, 219, 0.3);
     position: relative;
     overflow: hidden;
+    font-size: 0.875rem; /* Slightly smaller text */
 }
 
 .signin-btn::before {
@@ -1111,17 +1113,23 @@ body {
     max-height: calc(90vh - 100px);
 }
 
-/* Mobile optimizations */
+/* Mobile optimizations - Updated for shorter header */
 @media (max-width: 768px) {
     .logo-image {
-        height: 3rem;
+        height: 2rem; /* Reduced from 3rem to maintain proportion */
     }
     
     .header-content {
-        padding: 0.5rem 0;
-        flex-direction: column;
-        gap: 1rem;
-        align-items: flex-start;
+        padding: 0.4rem 0; /* Reduced padding for mobile */
+        flex-direction: row; /* Keep horizontal layout */
+        gap: 0.5rem;
+        align-items: center;
+    }
+    
+    .favorites-btn,
+    .signin-btn {
+        padding: 0.4rem 0.8rem; /* Smaller padding on mobile */
+        font-size: 0.75rem; /* Smaller text on mobile */
     }
     
     .hero-title {
@@ -1161,13 +1169,21 @@ body {
     }
     
     .logo-image {
-        height: 1.25rem;
+        height: 1.75rem; /* Reduced for very small screens */
+    }
+    
+    .header-content {
+        padding: 0.3rem 0; /* Even more compact on small screens */
+    }
+    
+    .brand-tagline {
+        font-size: 0.65rem; /* Smaller tagline on mobile */
     }
     
     .favorites-btn,
     .signin-btn {
-        padding: 0.5rem 1rem;
-        font-size: 0.875rem;
+        padding: 0.3rem 0.6rem; /* Very compact buttons */
+        font-size: 0.7rem;
     }
     
     .hero {
