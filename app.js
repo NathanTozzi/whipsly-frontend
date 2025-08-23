@@ -6,6 +6,30 @@ let currentView = 'grid';
 let map = null;
 let mapMarkers = [];
 
+// Load favorites from localStorage
+function loadFavorites() {
+    const savedFavorites = localStorage.getItem('whipsly-favorites');
+    if (savedFavorites) {
+        try {
+            const favoritesArray = JSON.parse(savedFavorites);
+            favorites = new Set(favoritesArray);
+        } catch (error) {
+            console.error('Error loading favorites:', error);
+            favorites = new Set();
+        }
+    }
+}
+
+// Save favorites to localStorage
+function saveFavorites() {
+    try {
+        const favoritesArray = Array.from(favorites);
+        localStorage.setItem('whipsly-favorites', JSON.stringify(favoritesArray));
+    } catch (error) {
+        console.error('Error saving favorites:', error);
+    }
+}
+
 // Enhanced filters object
 let filters = {
     search: '',
@@ -81,6 +105,9 @@ function getCarImage(make, model) {
 
 // Initialize data and event listeners
 document.addEventListener('DOMContentLoaded', function() {
+    // Load favorites first
+    loadFavorites();
+    
     // Check if generateRealisticCars is available (from realistic-cars.js)
     if (typeof generateRealisticCars === 'function') {
         // Initialize realistic car data
@@ -97,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
     renderCars();
     updateResultsTitle();
     updateMarketInsights();
+    updateFavoritesCount();
     
     // Initialize event listeners
     initializeEventListeners();
@@ -211,6 +239,12 @@ function initializeEventListeners() {
     // View toggle
     gridViewBtn.addEventListener('click', () => switchView('grid'));
     mapViewBtn.addEventListener('click', () => switchView('map'));
+    
+    // Favorites button
+    const favoritesBtn = document.getElementById('favoritesBtn');
+    if (favoritesBtn) {
+        favoritesBtn.addEventListener('click', showFavoritesModal);
+    }
     
     // Modal functionality
     modalClose.addEventListener('click', closeModal);
@@ -612,6 +646,7 @@ function toggleFavorite(carId) {
         favorites.add(carId);
     }
     
+    saveFavorites();
     updateFavoritesCount();
     renderCars();
 }
@@ -877,6 +912,97 @@ function closeModal() {
     carModal.style.display = 'none';
 }
 
+// Show favorites modal
+function showFavoritesModal() {
+    const favoritedCars = mockCars.filter(car => favorites.has(car.id));
+    const modalTitle = document.getElementById('modalCarTitle');
+    const modalContent = document.getElementById('modalCarContent');
+    
+    modalTitle.textContent = `My Favorites (${favoritedCars.length})`;
+    
+    if (favoritedCars.length === 0) {
+        modalContent.innerHTML = `
+            <div style="text-align: center; padding: 3rem; color: #6b7280;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">❤️</div>
+                <h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-bottom: 0.5rem;">No favorites yet</h3>
+                <p>Start favoriting cars to see them here!</p>
+            </div>
+        `;
+    } else {
+        const favoritesGrid = favoritedCars.map(car => {
+            const priceChange = calculatePriceChange(car);
+            const isNewListing = car.daysOnMarket <= 7;
+            
+            return `
+                <div style="background: white; border: 1px solid #e5e7eb; border-radius: 0.75rem; overflow: hidden; transition: all 0.2s; cursor: pointer;" onclick="viewCarDetails(${car.id}); closeModal();">
+                    <div style="position: relative;">
+                        <img src="${getCarImage(car.make, car.model)}" alt="${car.year} ${car.make} ${car.model}" style="width: 100%; height: 200px; object-fit: cover;">
+                        <button style="position: absolute; top: 0.5rem; right: 0.5rem; background: transparent; border: none; cursor: pointer; padding: 0.25rem;" onclick="event.stopPropagation(); toggleFavorite(${car.id}); showFavoritesModal();">
+                            <div style="width: 20px; height: 20px; background-image: url('data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23dc2626\' viewBox=\'0 0 24 24\' stroke=\'%23dc2626\' stroke-width=\'2\'%3e%3cpath d=\'m19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z\'/%3e%3c/svg%3e'); background-size: contain; background-repeat: no-repeat; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));"></div>
+                        </button>
+                        ${isNewListing ? '<div style="position: absolute; top: 0.5rem; left: 0.5rem; background: #059669; color: white; padding: 0.25rem 0.5rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 500;">New Listing</div>' : ''}
+                    </div>
+                    
+                    <div style="padding: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                            <h3 style="font-size: 1.125rem; font-weight: 700; color: #1f2937; margin: 0;">${car.year} ${car.make} ${car.model}</h3>
+                            <div style="display: flex; align-items: center; gap: 0.25rem; color: #fbbf24;">
+                                <span style="font-size: 0.875rem;">⭐</span>
+                                <span style="font-size: 0.875rem; color: #6b7280;">${car.rating}</span>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: #059669;">$${car.price.toLocaleString()}</div>
+                            <div style="display: flex; align-items: center; gap: 0.25rem; font-size: 0.875rem; color: ${priceChange.isPositive ? '#dc2626' : '#059669'};">
+                                <span>${priceChange.isPositive ? '↗' : '↘'}</span>
+                                ${Math.abs(priceChange.percent)}%
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 0.75rem; font-size: 0.875rem; color: #6b7280;">
+                            <div style="display: flex; align-items: center; gap: 0.25rem;">
+                                <span>📊</span>
+                                <span>${car.mileage.toLocaleString()} mi</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.25rem;">
+                                <span>⛽</span>
+                                <span>${car.mpg}</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.25rem;">
+                                <span>📍</span>
+                                <span>${car.location}</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.25rem;">
+                                <span>📅</span>
+                                <span>${car.daysOnMarket} days</span>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.25rem; margin-bottom: 1rem;">
+                            ${car.features.slice(0, 3).map(feature => 
+                                `<span style="background: #dbeafe; color: #1d4ed8; padding: 0.25rem 0.5rem; border-radius: 0.375rem; font-size: 0.75rem;">${feature}</span>`
+                            ).join('')}
+                        </div>
+                        
+                        <button style="width: 100%; background: #2563eb; color: white; font-weight: 600; padding: 0.75rem; border: none; border-radius: 0.5rem; cursor: pointer; transition: all 0.2s;" onclick="event.stopPropagation(); viewCarDetails(${car.id}); closeModal();">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+        
+        modalContent.innerHTML = `
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                ${favoritesGrid}
+            </div>
+        `;
+    }
+    
+    carModal.style.display = 'flex';
+}
+
 // Contact dealer function
 function contactDealer(carId) {
     const car = mockCars.find(c => c.id === carId);
@@ -955,3 +1081,4 @@ window.toggleFavorite = toggleFavorite;
 window.viewCarDetails = viewCarDetails;
 window.contactDealer = contactDealer;
 window.removeTag = removeTag;
+window.showFavoritesModal = showFavoritesModal;
