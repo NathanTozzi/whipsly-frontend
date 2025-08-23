@@ -56,10 +56,38 @@
                             placeholder="Search by make, model, or year..."
                             class="search-input"
                             id="searchInput"
+                            autocomplete="off"
                         >
+                        <div class="search-loading" id="searchLoading" style="display: none;"></div>
                         <button class="filter-toggle" id="filterToggle">
                             <i data-lucide="filter"></i>
                         </button>
+                        <button class="mobile-filter-toggle" id="mobileFilterToggle" style="display: none;">
+                            <i data-lucide="sliders-horizontal"></i>
+                            <span>Filters</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Search Autocomplete Dropdown -->
+                    <div class="search-dropdown" id="searchDropdown" style="display: none;">
+                        <div class="search-suggestions">
+                            <div class="suggestion-group">
+                                <div class="suggestion-title">Popular Searches</div>
+                                <div class="suggestions-list" id="popularSuggestions"></div>
+                            </div>
+                            <div class="suggestion-group">
+                                <div class="suggestion-title">Recent Searches</div>
+                                <div class="suggestions-list" id="recentSuggestions"></div>
+                            </div>
+                            <div class="suggestion-group" id="autocompleteSuggestions" style="display: none;">
+                                <div class="suggestion-title">Suggestions</div>
+                                <div class="suggestions-list" id="autocompleteList"></div>
+                            </div>
+                            <div class="suggestion-group" id="didYouMean" style="display: none;">
+                                <div class="suggestion-title">Did you mean?</div>
+                                <div class="suggestions-list" id="spellingSuggestions"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -416,6 +444,96 @@
         </div>
     </section>
 
+    <!-- Quick Filter Chips -->
+    <section class="quick-filters-section">
+        <div class="container">
+            <div class="quick-filters-header">
+                <h4 class="quick-filters-title">Quick Filters</h4>
+                <button class="clear-quick-filters" id="clearQuickFilters" style="display: none;">Clear All</button>
+            </div>
+            <div class="quick-filters-chips">
+                <button class="filter-chip" data-filter="price" data-value="25000" data-operator="max">
+                    <span class="chip-icon">💰</span>
+                    <span class="chip-text">Under $25k</span>
+                </button>
+                <button class="filter-chip" data-filter="mileage" data-value="50000" data-operator="max">
+                    <span class="chip-icon">📊</span>
+                    <span class="chip-text">Low Mileage (&lt;50k)</span>
+                </button>
+                <button class="filter-chip" data-filter="luxury" data-value="true">
+                    <span class="chip-icon">⭐</span>
+                    <span class="chip-text">Luxury Cars</span>
+                </button>
+                <button class="filter-chip" data-filter="fuel" data-value="electric,hybrid">
+                    <span class="chip-icon">🔋</span>
+                    <span class="chip-text">Electric/Hybrid</span>
+                </button>
+                <button class="filter-chip" data-filter="age" data-value="7" data-operator="max">
+                    <span class="chip-icon">🆕</span>
+                    <span class="chip-text">New Arrivals</span>
+                </button>
+                <button class="filter-chip" data-filter="condition" data-value="new">
+                    <span class="chip-icon">✨</span>
+                    <span class="chip-text">New Only</span>
+                </button>
+                <button class="filter-chip" data-filter="year" data-value="2022" data-operator="min">
+                    <span class="chip-icon">📅</span>
+                    <span class="chip-text">2022 & Newer</span>
+                </button>
+            </div>
+            <div class="active-chips" id="activeChips" style="display: none;">
+                <div class="active-chips-header">Active Filters:</div>
+                <div class="active-chips-list" id="activeChipsList"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Smart Recommendations -->
+    <section class="recommendations-section" id="recommendationsSection" style="display: none;">
+        <div class="container">
+            <div class="recommendations-header">
+                <h4 class="recommendations-title">🎯 Recommended For You</h4>
+                <p class="recommendations-subtitle">Based on your search history and preferences</p>
+            </div>
+            <div class="recommendations-scroll">
+                <div class="recommendations-cars" id="recommendationsCars">
+                    <!-- Recommended cars will be populated here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recently Viewed Cars -->
+    <section class="recently-viewed-section" id="recentlyViewedSection" style="display: none;">
+        <div class="container">
+            <div class="recently-viewed-header">
+                <h4 class="recently-viewed-title">Recently Viewed</h4>
+                <button class="clear-recently-viewed" id="clearRecentlyViewed">Clear All</button>
+            </div>
+            <div class="recently-viewed-scroll">
+                <div class="recently-viewed-cars" id="recentlyViewedCars">
+                    <!-- Recently viewed cars will be populated here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Compare Bar -->
+    <div class="compare-bar" id="compareBar" style="display: none;">
+        <div class="container">
+            <div class="compare-content">
+                <div class="compare-info">
+                    <span class="compare-icon">📊</span>
+                    <span class="compare-text">Compare <span id="compareCount">0</span> cars</span>
+                </div>
+                <div class="compare-actions">
+                    <button class="compare-btn" id="compareBtn" disabled>Compare Now</button>
+                    <button class="clear-compare-btn" id="clearCompareBtn">Clear All</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Results Section -->
     <section class="results-section">
         <div class="container">
@@ -433,6 +551,9 @@
                         </button>
                     </div>
                     <select class="sort-select" id="sortSelect">
+                        <option value="recommended" selected>🎯 Recommended For You</option>
+                        <option value="best-value">💎 Best Value</option>
+                        <option value="trending">📈 Trending Now</option>
                         <option value="price-low">Sort by Price: Low to High</option>
                         <option value="price-high">Sort by Price: High to Low</option>
                         <option value="mileage">Sort by Mileage</option>
@@ -463,6 +584,28 @@
             </div>
         </div>
     </section>
+
+    <!-- Mobile Filter Bottom Sheet -->
+    <div class="mobile-filter-overlay" id="mobileFilterOverlay" style="display: none;">
+        <div class="mobile-filter-sheet" id="mobileFilterSheet">
+            <div class="mobile-filter-header">
+                <div class="mobile-filter-handle"></div>
+                <div class="mobile-filter-title-section">
+                    <h3 class="mobile-filter-title">Filters</h3>
+                    <button class="mobile-filter-close" id="mobileFilterClose">
+                        <i data-lucide="x"></i>
+                    </button>
+                </div>
+                <div class="mobile-filter-actions">
+                    <button class="clear-all-mobile" id="clearAllMobile">Clear All</button>
+                    <button class="apply-filters-mobile" id="applyFiltersMobile">Apply Filters</button>
+                </div>
+            </div>
+            <div class="mobile-filter-content" id="mobileFilterContent">
+                <!-- Mobile-optimized filters will be populated here -->
+            </div>
+        </div>
+    </div>
 
     <!-- Car Detail Modal -->
     <div class="modal-overlay" id="carModal" style="display: none;">
