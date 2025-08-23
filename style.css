@@ -122,6 +122,19 @@ body {
     height: 16px;
 }
 
+/* Heart icon for header favorites button */
+.favorites-btn::before {
+    content: "";
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23D1D5DB' stroke-width='2'%3e%3cpath d='m19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z'/%3e%3c/svg%3e");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 0.25rem;
+}
+
 .signin-btn {
     background: linear-gradient(135deg, var(--chrome-silver), #B8BCC8);
     color: var(--midnight-navy);
@@ -270,6 +283,18 @@ body {
 .filter-toggle i {
     width: 18px;
     height: 18px;
+}
+
+/* Filter icon using SVG background */
+.filter-toggle::before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white' stroke-width='2'%3e%3cpolygon points='22,3 2,3 10,12.46 10,19 14,21 14,12.46 22,3'/%3e%3c/svg%3e");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 /* Enhanced Filters Section */
@@ -810,6 +835,22 @@ body {
 
 .favorite-btn:not(.favorited) i {
     color: #6b7280;
+}
+
+/* Heart icon using SVG background */
+.favorite-btn::before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280' stroke-width='2'%3e%3cpath d='m19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z'/%3e%3c/svg%3e");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.favorite-btn.favorited::before {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23dc2626' viewBox='0 0 24 24' stroke='%23dc2626' stroke-width='2'%3e%3cpath d='m19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z'/%3e%3c/svg%3e");
 }
 
 .new-listing-badge {
