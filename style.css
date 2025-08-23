@@ -46,7 +46,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.75rem 0;
+    padding: 0.25rem 0;
     position: relative;
     z-index: 10;
     background: transparent;
@@ -1161,7 +1161,7 @@ body {
     }
     
     .logo-image {
-        height: 2.75rem;
+        height: 1.25rem;
     }
     
     .favorites-btn,
