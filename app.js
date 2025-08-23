@@ -27,16 +27,7 @@ const carMakes = [
     "Nissan", "Hyundai", "Kia", "Mazda", "Subaru", "Volkswagen", "Lexus", "Infiniti"
 ];
 
-const carModels = {
-    "Toyota": ["Camry", "Corolla", "RAV4", "Highlander", "Prius", "Tacoma", "Tundra"],
-    "Honda": ["Civic", "Accord", "CR-V", "Pilot", "Fit", "Ridgeline", "Passport"],
-    "Ford": ["F-150", "Explorer", "Escape", "Mustang", "Focus", "Edge", "Expedition"],
-    "Tesla": ["Model 3", "Model Y", "Model S", "Model X"],
-    "BMW": ["X3", "3 Series", "5 Series", "X5", "i3", "X1", "7 Series"],
-    "Mercedes-Benz": ["C-Class", "E-Class", "GLE", "A-Class", "S-Class", "GLC", "GLS"],
-    "Chevrolet": ["Silverado", "Equinox", "Malibu", "Tahoe", "Camaro", "Traverse", "Suburban"],
-    "Audi": ["A4", "Q5", "A6", "Q7", "A3", "Q3", "A8"]
-};
+// carModels is imported from data/realistic-cars.js
 
 // Load favorites from localStorage
 function loadFavorites() {
@@ -1271,7 +1262,7 @@ function generateAutocompleteSuggestions(term) {
     
     // Search car models
     Object.entries(carModels).forEach(([make, models]) => {
-        models.forEach(model => {
+        Object.keys(models).forEach(model => {
             if (model.toLowerCase().includes(term) || make.toLowerCase().includes(term)) {
                 suggestions.push({
                     text: `${make} ${model}`,
@@ -1312,7 +1303,8 @@ function generateAutocompleteSuggestions(term) {
 // Generate spelling suggestions
 function generateSpellingSuggestions(term) {
     const suggestions = [];
-    const allTerms = [...carMakes, ...Object.values(carModels).flat(), ...popularSearches];
+    const allModels = Object.values(carModels).map(models => Object.keys(models)).flat();
+    const allTerms = [...carMakes, ...allModels, ...popularSearches];
     
     allTerms.forEach(item => {
         if (calculateLevenshteinDistance(term.toLowerCase(), item.toLowerCase()) <= 2 && 
