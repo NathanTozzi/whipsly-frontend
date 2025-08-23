@@ -67,7 +67,7 @@ body {
 }
 
 .logo-image {
-    height: 2.5rem; /* Reduced from 4.5rem to 2.5rem for better proportion */
+    height: 4.25rem; 
     width: auto;
     transition: all 0.3s ease;
     filter: brightness(1.2) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
@@ -79,7 +79,7 @@ body {
 }
 
 .brand-tagline {
-    font-size: 0.75rem; /* Slightly reduced for proportional balance */
+    font-size: 1.15rem; /* Slightly reduced for proportional balance */
     color: var(--chrome-silver);
     margin: 0;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
@@ -157,7 +157,7 @@ body {
 .hero {
     background: linear-gradient(135deg, var(--midnight-navy), var(--midnight-navy-light), #2D4A72);
     color: white;
-    padding: 1rem 0;
+    padding: 2.5rem 0;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -180,7 +180,7 @@ body {
 }
 
 .hero-title {
-    font-size: 1.5rem;
+    font-size: 2.75rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
     background: linear-gradient(135deg, white, var(--sky-blue));
@@ -190,13 +190,13 @@ body {
 }
 
 .hero-subtitle {
-    font-size: 0.875rem;
+    font-size: 1.25rem;
     margin-bottom: 1rem;
     color: var(--chrome-silver);
 }
 
 .search-container {
-    max-width: 24rem;
+    max-width: 40rem;
     margin: 0 auto;
 }
 
@@ -217,7 +217,7 @@ body {
 .search-input {
     width: 100%;
     padding: 0.5rem 0.5rem 0.5rem 2rem;
-    font-size: 0.875rem;
+    font-size: 1.25rem;
     border: 2px solid transparent;
     border-radius: 0.5rem;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
@@ -244,7 +244,7 @@ body {
 
 .filter-toggle {
     position: absolute;
-    right: 0.5rem;
+    right: 1.5rem;
     background: var(--sky-blue);
     color: white;
     border: none;
