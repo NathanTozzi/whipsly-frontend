@@ -67,7 +67,7 @@ body {
 }
 
 .logo-image {
-    height: 12.0rem;
+    height: 15.0rem;
     width: auto;
     transition: all 0.3s ease;
     filter: brightness(1.2) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
